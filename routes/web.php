@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AssociadoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CupomController;
 
 Route::match(['get','post'], '/', [AssociadoController::class, 'passo1'])->name("passo1");
 Route::prefix('associado')->name("associado.")->group(function () {
@@ -18,5 +19,11 @@ Route::match(['get','post'], '/login', [LoginController::class, 'login'])->name(
 
 Route::prefix('admin')->name("admin.")->group(function () {
     Route::match(['get','post'], '/', [AdminController::class, 'home'])->name("home");
+
+    Route::prefix('cupom')->name("cupom.")->group(function () {
+        Route::match(['get', 'post'], '/', [CupomController::class, 'index'])->name("index");
+        Route::match(['get', 'post'], '/save', [CupomController::class, 'save'])->name("save");
+        Route::match(['get', 'post'], '/buscar', [CupomController::class, 'buscar'])->name("buscar");
+    });
 
 });

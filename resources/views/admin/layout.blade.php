@@ -27,7 +27,7 @@
 		<div class="d-flex align-items-center logo-box justify-content-between">
 			<!-- logo-->
 			<div class="logo-lg">
-				<span class="light-logo"><img src="images/logo.png" alt="logo" style="padding-top: 10px; width: 90%; padding-left: 18px;"></span>
+				<span class="light-logo"><img src="{{ asset('images/logo.png') }}" alt="logo" style="padding-top: 10px; width: 90%; padding-left: 18px;"></span>
 			</div>
 			</a>
 		</div>
@@ -116,8 +116,8 @@
 							</span>
 						</a>
 						<ul class="treeview-menu" style="">
-							<li><a href="addCupom.php">Adicionar Cupom</a></li>
-							<li><a href="cupons.php">Cupons Gerados</a></li>
+							<li><a href="{{ route('admin.cupom.index') }}">Adicionar Cupom</a></li>
+							<li><a href="{{ route('admin.cupom.buscar') }}">Cupons Gerados</a></li>
 						</ul>
 					</li>
 					<li>
