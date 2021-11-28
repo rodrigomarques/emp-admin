@@ -6,6 +6,9 @@ use App\Http\Controllers\AssociadoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CupomController;
+use App\Http\Controllers\InitController;
+
+Route::get('/init', [InitController::class, 'load'])->name("init.load");
 
 Route::match(['get','post'], '/', [AssociadoController::class, 'passo1'])->name("passo1");
 Route::prefix('associado')->name("associado.")->group(function () {

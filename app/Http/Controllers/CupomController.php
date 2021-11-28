@@ -75,12 +75,16 @@ class CupomController extends Controller
         $data = [];
         if(count($dataLista["data"]) > 0){
             $cupomGrid = array_map(function($cupom) use($cupomService){
+                $valor = Format::fn($cupom["valor"], 2, false) . " %";
+                if($cupom["tipo"] == "VALOR")
+                    $valor = Format::fn($cupom["valor"]);
+
                 $dataLista = [
                     $cupom["titulo"],
                     $cupom["codigo"],
                     Format::fnDateView($cupom["dt_inicio"]),
                     Format::fnDateView($cupom["dt_termino"]),
-                    Format::fn($cupom["valor"]),
+                    $valor,
                     $cupomService->getCategoria($cupom["categorias"], "<br>"),
                     Html::status($cupom["status"])
                 ];

@@ -4,12 +4,14 @@ namespace App\Util;
 
 class Format
 {
-    public static function fn($number, $decimal = 2, $separatorDec = "," , $separatorTho = ""){
+    public static function fn($number, $decimal = 2, $prefix = true, $separatorDec = "," , $separatorTho = ""){
+        $symbol = $prefix ? "R$ " : "";
+
         if(is_numeric($number)){
-            return "R$ " . number_format($number, $decimal, $separatorDec, $separatorTho);
+            return $symbol . number_format($number, $decimal, $separatorDec, $separatorTho);
         }
 
-        return "R$ 0,00";
+        return "${symbol}0,00";
     }
 
     public static function fnDateView($date){
