@@ -10,15 +10,16 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Nome do Cupom</label>
-                        <input type="text" name="nomeSocial" class="form-control" value="" id="" required>
+                        <input type="text" name="titulo" class="form-control" value="" id="" required>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="">Código do Cupom</label>
-                        <input type="text" name="nome" class="form-control" value="" id="" required>
+                        <input type="text" name="codigo" class="form-control" value="" id="" required>
                     </div>
                 </div>
             </div>
@@ -27,10 +28,10 @@
                     <div class="form-group">
                         <label for="">Valor do Desconto</label>
                         <br>
-                            <input type="text" name="nome" class="form-control" value="" id="" required style="width:20%;display:inline-block">
-                            <select class="custom-select form-control" style="width:20%;display:inline-block">
-                                <option value="1">%</option>
-                                <option value="0">R$</option>
+                            <input type="text" name="valor" class="form-control" value="" id="" required style="width:20%;display:inline-block">
+                            <select name="tipo" class="custom-select form-control" style="width:20%;display:inline-block">
+                                <option value="PECENT">%</option>
+                                <option value="VALOR">R$</option>
                             </select>
 
                     </div>
@@ -40,13 +41,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Data Início</label>
-                        <input type="date" name="nome" class="form-control" value="" id="" required>
+                        <input type="date" name="dt_inicio" class="form-control" value="" id="" required>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Data de Término</label>
-                        <input type="date" name="nome" class="form-control" value="" id="" required>
+                        <input type="date" name="dt_termino" class="form-control" value="" id="" required>
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
                             multiple=''
                             data-selection-required='1'
                             list='categorias'
-                            name='categoria'>
+                            name='categorias'>
 
                         <datalist id="categorias">
                             @foreach($subcategoria as $sub)

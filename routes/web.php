@@ -24,6 +24,7 @@ Route::prefix('admin')->name("admin.")->group(function () {
         Route::match(['get', 'post'], '/', [CupomController::class, 'index'])->name("index");
         Route::match(['get', 'post'], '/save', [CupomController::class, 'save'])->name("save");
         Route::match(['get', 'post'], '/buscar', [CupomController::class, 'buscar'])->name("buscar");
+        Route::match(['get', 'post'], '/ajax-buscar', [CupomController::class, 'ajaxBuscar'])->name("ajax.buscar");
     });
 
 });
