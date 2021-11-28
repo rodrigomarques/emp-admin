@@ -35,7 +35,7 @@
 							<div class="content-top-agile pb-0">
 							</div>
 							<div class="p-40">
-								<form action="dashboard.php" method="post">
+								<form action="{{ route('logar') }}" method="post">
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<div class="input-group-prepend">

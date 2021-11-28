@@ -19,8 +19,10 @@ Route::prefix('associado')->name("associado.")->group(function () {
 });
 
 Route::match(['get','post'], '/login', [LoginController::class, 'login'])->name("login");
+Route::match(['get','post'], '/logar', [LoginController::class, 'logar'])->name("logar");
+Route::get('/sair', [LoginController::class, 'sair'])->name("sair");
 
-Route::prefix('admin')->name("admin.")->group(function () {
+Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")->group(function () {
     Route::match(['get','post'], '/', [AdminController::class, 'home'])->name("home");
 
     Route::prefix('cupom')->name("cupom.")->group(function () {

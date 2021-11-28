@@ -66,7 +66,7 @@
             </a>
             <ul class="dropdown-menu animated flipInX">
               <li class="user-body">
-				 <a class="dropdown-item" href="sair.php"><i class="ti-lock text-muted mr-2"></i> Sair</a>
+				 <a class="dropdown-item" href="{{ route('sair') }}"><i class="ti-lock text-muted mr-2"></i> Sair</a>
               </li>
             </ul>
           </li>
@@ -127,7 +127,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="sair.php">
+						<a href="{{ route('sair') }}">
 						<i class="fa fa-sign-out" aria-hidden="true"></i>
 							<span>Sair</span>
 						</a>
@@ -156,7 +156,7 @@
 					</li>
 					</li>
 					<li>
-						<a href="sair.php">
+						<a href="{{ route('sair') }}">
 						<i class="fa fa-sign-out" aria-hidden="true"></i>
 							<span>Sair</span>
 						</a>
