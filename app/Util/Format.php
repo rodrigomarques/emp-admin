@@ -23,4 +23,14 @@ class Format
             return $date;
         }
     }
+
+    public static function hideEmail($email){
+        try{
+            $emailPartes = explode("@", $email);
+            return substr($emailPartes[0],0,2). "****" . substr($emailPartes[0],-2) . "@" . substr($emailPartes[1], 0, 3);
+        }catch(\Exception $e){
+            \Log::error("Hide email", [$e->getMessage()]);
+            return "";
+        }
+    }
 }

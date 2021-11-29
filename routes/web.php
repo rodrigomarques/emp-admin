@@ -21,6 +21,11 @@ Route::prefix('associado')->name("associado.")->group(function () {
 Route::match(['get','post'], '/login', [LoginController::class, 'login'])->name("login");
 Route::match(['get','post'], '/logar', [LoginController::class, 'logar'])->name("logar");
 Route::get('/sair', [LoginController::class, 'sair'])->name("sair");
+Route::match(['get','post'], '/esqueceu-senha', [LoginController::class, 'esqueceuSenha'])->name("esqueceu-senha");
+Route::match(['get','post'], '/send-esqueceu-senha', [LoginController::class, 'sendEsqueceuSenha'])->name("send-esqueceu-senha");
+
+Route::get('/alterar-senha/{$token}', [LoginController::class, 'alterarSenha'])->name("alterar-senha");
+Route::post('/alterar-senha/{$token}', [LoginController::class, 'confirmAlterarSenha'])->name("confirm-alterar-senha");
 
 Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")->group(function () {
     Route::match(['get','post'], '/', [AdminController::class, 'home'])->name("home");

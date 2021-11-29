@@ -43,19 +43,6 @@
                                     </div>
                                 </div>
                                 @endif
-
-                                @if($errors->any())
-                                    <div class="col-12">
-                                    <div class="mt-2 alert alert-warning">
-                                        <ul>
-                                            @foreach($errors->all() as $erro)
-                                                <li>{{ $erro }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    </div>
-                                @endif
-
                                 @if ($message = Session::get('error'))
                                 <div class="col-12">
                                     <div class="alert alert-danger alert-block">
@@ -64,7 +51,7 @@
                                     </div>
                                 </div>
                                 @endif
-								<form action="{{ route('logar') }}" method="post">
+								<form action="{{ route('send-esqueceu-senha') }}" method="post">
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<div class="input-group-prepend">
@@ -73,23 +60,15 @@
 											<input type="text" name="email" class="form-control pl-15 bg-transparent" placeholder="Login">
 										</div>
 									</div>
-									<div class="form-group">
-										<div class="input-group mb-3">
-											<div class="input-group-prepend">
-												<span class="input-group-text  bg-transparent"><i class="ti-lock"></i></span>
-											</div>
-											<input type="password" name="senha" class="form-control pl-15 bg-transparent" placeholder="Senha">
-										</div>
-									</div>
 									  <div class="row">
 										<div class="col-6">
 										 <div class="fog-pwd text-right">
-											<a href="{{ route('esqueceu-senha') }}" class="hover-warning"><i class="ion ion-locked"></i> Esqueceu a senha?</a><br>
+											<a href="{{ route('login') }}" class="hover-warning"><i class="ion ion-locked"></i> Logar</a><br>
 										  </div>
 										</div>
 										<!-- /.col -->
 										<div class="col-12 text-center">
-										  <button type="submit" class="btn mt-10" style="background: #162647; color: #FFF;">Entrar</button>
+										  <button type="submit" class="btn mt-10" style="background: #162647; color: #FFF;">Enviar Senha</button>
 										</div>
 										<!-- /.col -->
 									  </div>
