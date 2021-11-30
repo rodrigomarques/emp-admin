@@ -33,4 +33,9 @@ class Format
             return "";
         }
     }
+
+    public static function getNumberOnly($value){
+        $value = preg_replace('/[^0-9.]/', '', $value);
+        return $value;
+    }
 }

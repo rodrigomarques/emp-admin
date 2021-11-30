@@ -4,7 +4,7 @@
     <h2>Quero ser associado</h2>
 </div>
 <div class="p-40 pt-10">
-    <form action="{{ route('associado.passo2') }}" method="post">
+    <form action="{{ route('associado.passo1-save') }}" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -31,24 +31,24 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" name="telefone" class="form-control pl-15 bg-transparent phone" placeholder="Telefone Residencial" >
+                        <input type="text" name="telefone_res" class="form-control pl-15 bg-transparent phone" placeholder="Telefone Residencial" >
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" name="celular" class="form-control pl-15 bg-transparent phone" placeholder="Celular" >
+                        <input type="text" name="telefone_cel" class="form-control pl-15 bg-transparent phone" placeholder="Celular" >
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control" id="" name="plano">
-                            <option>Sexo</option>
-                            <option>Masculino</option>
-                            <option>Feminino</option>
+                        <select class="custom-select form-control" id="sexo" name="sexo">
+                            <option value="">Sexo</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
                         </select>
                     </div>
                 </div>
@@ -65,14 +65,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" name="telefone" class="form-control pl-15 bg-transparent phone" placeholder="Senha" >
+                        <input type="password" name="senha" class="form-control pl-15 bg-transparent phone" placeholder="Senha" >
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" name="telefone" class="form-control pl-15 bg-transparent phone" placeholder="Confirme a Senha" >
+                        <input type="password" name="csenha" class="form-control pl-15 bg-transparent phone" placeholder="Confirme a Senha" >
                     </div>
                 </div>
             </div>
@@ -83,29 +83,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control" id="categoria" name="categoria">
+                        <select class="custom-select form-control" id="subcategoria" name="subcategoria_id">
                             <option value="">Selecione a categoria principal</option>
-                            <option value="1">ALUNO ESCOLA FORMAÇÃO</option>
-                            <option value="2">MILITAR DE FORÇA AUXILIAR ATIVA – CB</option>
-                            <option value="2">MILITAR DE FORÇA AUXILIAR ATIVA– PM</option>
-                            <option value="2">MILITAR EB ATIVA - de Carreira</option>
-                            <option value="2">MILITAR EB ATIVA RM2/RM3</option>
-                            <option value="2">MILITAR ESTRANGEIRO</option>
-                            <option value="2">MILITAR FAB ATIVA - de Carreira</option>
-                            <option value="2">MILITAR FAB ATIVA RM2/RM3</option>
-                            <option value="1">MILITAR MB ATIVA - de Carreira</option>
-                            <option value="1">MILITAR MB ATIVA RM2/RM3</option>
-                            <option value="2">MILITAR DE FORÇA AUXILIAR RES/REF – CB</option>
-                            <option value="2">MILITAR DE FORÇA AUXILIAR RES/REF– PM</option>
-                            <option value="2">MILITAR EB RESERVA /REFORMADO</option>
-                            <option value="2">MILITAR FAB RESERVA /REFORMADO</option>
-                            <option value="1">MILITAR MB RESERVA RM1 e REFORMADO</option>
-                            <option value="2">MILITAR MB RESERVA RM2</option>
-                            <option value="2">CONTRATADO ACANTHUS</option>
-                            <option value="2">CONVIDADO</option>
-                            <option value="2">SERVIDOR CIVIL DA MB</option>
-                            <option value="2">SERVIDOR DE AUTARQUIA VINCULADA A MB</option>
-                            <option value="2">SERVIDOR DE ESTATAL VINCULADA A MB</option>
+                            @if(count($listSubCategoria) > 0)
+                                @foreach($listSubCategoria as $sub)
+                                    <option value="{{ $sub->id }}">{{ $sub->subcategoria }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -113,14 +97,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" name="email" class="form-control pl-15 bg-transparent" placeholder="RG" >
+                        <input type="text" name="rg" class="form-control pl-15 bg-transparent" placeholder="RG" >
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" name="email" class="form-control pl-15 bg-transparent" placeholder="NIP"  id="nip" disabled>
+                        <input type="text" name="nip" class="form-control pl-15 bg-transparent" placeholder="NIP"  id="nip" disabled>
                     </div>
                 </div>
             </div>
@@ -130,17 +114,17 @@
                 <div class="form-group">
                     <div class="input-group mb-3">
                         <select class="custom-select form-control" id="pagamentoNIP" name="pagamentoNIP" style="display:none">
-                            <option>Forma de Pagamento</option>
-                            <option>Desconto em Folha</option>
-                            <option>Depósito Bancário</option>
-                            <option>Boleto Bancário</option>
-                            <option>Cartão de Crédito</option>
+                            <option value="">Forma de Pagamento</option>
+                            <option value="FOLHA">Desconto em Folha</option>
+                            <option value="DEPOSITO">Depósito Bancário</option>
+                            <option value="BOLETO">Boleto Bancário</option>
+                            <option value="CREDITO">Cartão de Crédito</option>
                         </select>
                         <select class="custom-select form-control" id="pagamento" name="pagamento" style="display:block">
-                            <option>Forma de Pagamento</option>
-                            <option>Depósito Bancário</option>
-                            <option>Boleto Bancário</option>
-                            <option>Cartão de Crédito</option>
+                            <option value="">Forma de Pagamento</option>
+                            <option value="DEPOSITO">Depósito Bancário</option>
+                            <option value="BOLETO">Boleto Bancário</option>
+                            <option value="CREDITO">Cartão de Crédito</option>
                         </select>
                     </div>
                 </div>
@@ -150,9 +134,9 @@
                     <div class="input-group mb-3">
                         <select class="custom-select form-control" id="" name="plano">
                             <option>Selecione o Plano</option>
-                            <option>12 meses</option>
-                            <option>24 meses</option>
-                            <option>36 meses</option>
+                            <option value="12">12 meses</option>
+                            <option value="24">24 meses</option>
+                            <option value="36">36 meses</option>
                         </select>
                     </div>
                 </div>

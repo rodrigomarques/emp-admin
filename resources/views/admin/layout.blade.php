@@ -85,10 +85,11 @@
 							</div>
         </div>
 
+        @if(auth()->user() && auth()->user()->isRoleAdmin())
 		<!-- MENU DO NÍVEL ADMINISTRADOR -->
 		<ul class="sidebar-menu" data-widget="tree">
 					<li>
-						<a href="dashboard.php">
+						<a href="{{ route('admin.home') }}">
 						<i class="fa fa-dashboard" aria-hidden="true"></i>
 							<span>Início</span>
 						</a>
@@ -134,8 +135,10 @@
 					</li>
 		</ul>
 		<!-- FIM MENU NÍVEL ADMINISTRADOR -->
+        @endif
 
 		<!-- MENU DO NÍVEL ASSOCIADO -->
+        @if(auth()->user() && auth()->user()->isRoleOnlyAssociado())
 		<ul class="sidebar-menu" data-widget="tree">
 					<li>
 						<a href="perfil.php">
@@ -162,6 +165,7 @@
 						</a>
 					</li>
 		</ul>
+        @endif
 		<!-- FIM MENU NÍVEL ADMINISTRADOR -->
 
     </section>

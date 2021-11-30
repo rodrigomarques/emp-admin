@@ -51,4 +51,16 @@ class Usuario extends RModel implements Authenticatable
     {
 
     }
+
+    public function isRoleAdmin(){
+        return in_array($this->perfil, [Perfil::ADMIN]);
+    }
+
+    public function isRoleAssociado(){
+        return in_array($this->perfil, [Perfil::ADMIN, Perfil::ASSOCIADO]);
+    }
+
+    public function isRoleOnlyAssociado(){
+        return in_array($this->perfil, [Perfil::ASSOCIADO]);
+    }
 }

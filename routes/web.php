@@ -12,7 +12,9 @@ Route::get('/init', [InitController::class, 'load'])->name("init.load");
 
 Route::match(['get','post'], '/', [AssociadoController::class, 'passo1'])->name("passo1");
 Route::prefix('associado')->name("associado.")->group(function () {
-    Route::match(['get','post'], 'passo-1', [AssociadoController::class, 'passo1'])->name("passo1");
+    Route::get('passo-1', [AssociadoController::class, 'passo1'])->name("passo1");
+    Route::post('save/passo-1', [AssociadoController::class, 'passo1Save'])->name("passo1-save");
+
     Route::match(['get','post'], 'passo-2', [AssociadoController::class, 'passo2'])->name("passo2");
     Route::match(['get','post'], 'passo-3', [AssociadoController::class, 'passo3'])->name("passo3");
     Route::match(['get','post'], 'passo-4', [AssociadoController::class, 'passo4'])->name("passo4");
