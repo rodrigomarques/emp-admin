@@ -4,7 +4,7 @@
     <h2>Quero ser associado</h2>
 </div>
 <div class="p-40 pt-10">
-    <form action="cadastro2.php" method="post">
+    <form action="{{ route('associado.passo2') }}" method="post">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

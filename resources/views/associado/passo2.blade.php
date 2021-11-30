@@ -5,7 +5,7 @@
     <h2>Preencha seu endereço</h2>
 </div>
 <div class="p-40 pt-10">
-    <form action="cadastro3.php" method="post">
+    <form action="{{ route('associado.passo3') }}" method="post">
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -92,7 +92,7 @@
         </div>
         <div class="row">
             <div class="col-12 text-center">
-                <a href="" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</a>
+                <a href="{{ route('associado.passo1') }}" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</a>
                 <button type="submit" class="btn mt-10" style="background: #162647; color: #FFF;">Avançar</button>
             </div>
         </div>

@@ -18,7 +18,7 @@
             </div>
         </div>
         <div id="cadastroDependente" style="display:none;">
-        <form action="cadastro4.php" method="post">
+        <form action="{{ route('associado.passo4') }}" method="post">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -86,17 +86,17 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                    <button type="submit" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</button>
+                    <a href="{{ route('associado.passo2') }}" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</a>
                     <button type="submit" class="btn mt-10" style="background: #162647; color: #FFF;">Avançar</button>
                 </div>
             </div>
             </form>
         </div>
         <div id="concluir">
-            <form action="cadastroConcluido.php" method="post">
+            <form action="{{ route('associado.passo4') }}" method="post">
             <div class="row">
                 <div class="col-12 text-center">
-                    <button type="submit" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</button>
+                    <a href="{{ route('associado.passo2') }}" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</a>
                     <button type="submit" class="btn mt-10" style="background: #162647; color: #FFF;">Concluir Cadastro</button>
                 </div>
             </div>
