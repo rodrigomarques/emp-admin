@@ -10,6 +10,7 @@ use App\Util\Format;
 use App\Models\Usuario;
 use App\Services\UsuarioService;
 use App\Responses\ResponseEntity;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -65,5 +66,61 @@ class LoginController extends Controller
         }
 
         return back();
+    }
+
+    public function alterarSenha($token, Request $request){
+        $email = $request->query("email");
+
+        $service = new UsuarioService();
+        $valid = $service->validateToken($token, $email);
+
+        if(!$valid){
+            $request->session()->flash('error', "Token / E-mail inválido!");
+            \Log::error("Token inválido to reset password", [ $token, $email ]);
+            return redirect()->route('login');
+        }
+
+        $tokenRequest = Str::random(30);
+        $request->session()->put('tokenInput', $tokenRequest);
+
+        $data["token"] = $token;
+        $data["email"] = $email;
+        $data["validate"] = $tokenRequest;
+        return view("alterar_senha", $data);
+    }
+
+    public function confirmAlterarSenha($token, Request $request){
+        $email = $request->input("email");
+        $tokenValidate = $request->input("validate");
+        $senha = $request->input("senha");
+
+        $tokenInput = $request->session()->get('tokenInput', '');
+        $request->session()->forget('tokenInput');
+
+        if($tokenInput != $tokenValidate){
+            $request->session()->flash('error', "Token inválido!");
+            \Log::error("Token inválido input", [$tokenInput, $tokenValidate]);
+            return redirect()->route('login');
+        }
+
+        $service = new UsuarioService();
+        $valid = $service->validateToken($token, $email);
+
+        if (!$valid) {
+            $request->session()->flash('error', "Token / E-mail inválido!");
+            \Log::error("Token inválido to reset password", [$token, $email]);
+            return redirect()->route('login');
+        }
+
+        $usuario = Usuario::where('email', $email)->first();
+        $usuario->password = $senha;
+        if(!$usuario->validate()){
+            return redirect()->route('alterar-senha', ['token' => $token, 'email' => $email])->withErrors($usuario->errors());
+        }
+        $usuario->password = Hash::make($senha);
+        $usuario->save();
+
+        $request->session()->flash('success', "Senha alterada com sucesso!");
+        return redirect()->route('login');
     }
 }

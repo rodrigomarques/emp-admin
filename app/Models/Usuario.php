@@ -14,11 +14,12 @@ class Usuario extends RModel implements Authenticatable
     protected $fillable = ['nome', 'email', 'password', 'status', 'perfil'];
 
     protected $rules = [
-
+        'password' => 'required|min:6',
+        'email' => 'required',
     ];
 
     protected $messages = [
-
+        'password.min' => 'Senha deve ter ao menos 6 caracter',
     ];
 
     public function getAuthIdentifier()

@@ -60,4 +60,22 @@ class UsuarioService
 
         return $response;
     }
+
+    public function validateToken($token, $email): bool{
+        date_default_timezone_set('America/Sao_Paulo');
+        try{
+            $hoje = \Carbon\Carbon::now();
+
+            $passReset = PasswordReset::where("email", $email)
+                            ->where("status", Status::ATIVO)
+                            ->where("token", $token)
+                            ->where("token_validate", ">=", $hoje->format("Y-m-d H:i:s"))
+                            ->first();
+            if(!$passReset)
+                return false;
+            return true;
+        }catch(\Exception $e){
+            return false;
+        }
+    }
 }
