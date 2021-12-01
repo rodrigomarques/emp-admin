@@ -15,10 +15,14 @@ class Associado extends RModel
     ];
 
     protected $rules = [
-
+        'cpf' => 'required',
+        'forma_pagamento' => 'required',
+        'plano' => 'required',
     ];
 
     protected $messages = [
-
+        'cpf.required' => 'CPF é obrigatório',
+        'forma_pagamento.required' => 'Forma de pagamento é obrigatório',
+        'plano.required' => 'Plano é obrigatório',
     ];
 }

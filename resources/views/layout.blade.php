@@ -42,6 +42,35 @@
                             <img src="{{ asset('images/logo.png') }}" alt="logo" width="300px;">
                         </div>
                         <div class="row">
+                            @if ($message = Session::get('success'))
+                            <div class="col-12">
+                                <div class="alert alert-success alert-block">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                        <strong>{{ $message }}</strong>
+                                </div>
+                            </div>
+                            @endif
+
+                            @if($errors->any())
+                                <div class="col-12">
+                                <div class="mt-2 alert alert-warning">
+                                    <ul>
+                                        @foreach($errors->all() as $erro)
+                                            <li>{{ $erro }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                </div>
+                            @endif
+
+                            @if ($message = Session::get('error'))
+                            <div class="col-12">
+                                <div class="alert alert-danger alert-block">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                        <strong>{{ $message }}</strong>
+                                </div>
+                            </div>
+                            @endif
                             <div class="col-md-12">
                                 @yield('content')
                             </div>

@@ -19,7 +19,9 @@ class Usuario extends RModel implements Authenticatable
     ];
 
     protected $messages = [
+        'password.required' => 'Senha é obrigatória',
         'password.min' => 'Senha deve ter ao menos 6 caracter',
+        'email.required' => 'E-mail é obrigatório',
     ];
 
     public function getAuthIdentifier()
