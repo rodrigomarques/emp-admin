@@ -221,4 +221,29 @@ class AssociadoService
 
         return $response;
     }
+
+    public function getCountPlanos($status = []){
+        $sql = "SELECT COUNT(*) TOTAL, CONCAT(plano, ' meses') planos FROM associados WHERE 1 = 1 ";
+
+        if(count($status) > 0){
+            $sql .= " AND status in ('" . implode("','", $status). "') ";
+        }
+
+        $sql .= " GROUP BY plano ";
+        return \DB::select($sql);
+    }
+
+    public function getCountCategorias($status = []){
+        $sql = "SELECT COUNT(*) TOTAL, categoria FROM categorias c
+                inner join subcategorias sc ON c.id = sc.categoria_id
+                INNER JOIN associados a ON sc.id = a.subcategoria_id
+                WHERE 1 = 1 ";
+
+        if(count($status) > 0){
+            $sql .= " AND status in ('" . implode("','", $status). "') ";
+        }
+
+        $sql .= " GROUP BY c.id ";
+        return \DB::select($sql);
+    }
 }

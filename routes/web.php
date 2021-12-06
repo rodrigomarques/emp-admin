@@ -35,6 +35,8 @@ Route::post('/alterar-senha/{token}', [LoginController::class, 'confirmAlterarSe
 
 Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")->group(function () {
     Route::match(['get','post'], '/', [AdminController::class, 'home'])->name("home");
+    Route::get('/ajax-planos', [AdminController::class, 'ajaxPlanos'])->name("ajax.planos");
+    Route::get('/ajax-categorias', [AdminController::class, 'ajaxCategorias'])->name("ajax.categorias");
 
     Route::prefix('cupom')->name("cupom.")->group(function () {
         Route::match(['get', 'post'], '/', [CupomController::class, 'index'])->name("index");

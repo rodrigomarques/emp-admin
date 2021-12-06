@@ -16,7 +16,7 @@
                     <i class="text-danger mr-0 font-size-20 fa fa-users"></i>
                 </div>
                 <div>
-                    <h3 class="text-dark mb-0 font-weight-500">120</h3>
+                    <h3 class="text-dark mb-0 font-weight-500">{{ $total }}</h3>
                     <p class="text-mute mb-0">Associados</p>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     <i class="text-danger mr-0 font-size-20 fa fa-user-plus"></i>
                 </div>
                 <div>
-                    <h3 class="text-dark mb-0 font-weight-500">43</h3>
+                    <h3 class="text-dark mb-0 font-weight-500">{{ $totalDependente }}</h3>
                     <p class="text-mute mb-0">Dependentes</p>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <i class="text-danger mr-0 font-size-20 fa fa-thumbs-up"></i>
                 </div>
                 <div>
-                    <h3 class="text-dark mb-0 font-weight-500">95</h3>
+                    <h3 class="text-dark mb-0 font-weight-500">{{ count($totalAtivos) }}</h3>
                     <p class="text-mute mb-0">Ativos</p>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                     <i class="text-danger mr-0 font-size-20 fa fa-times"></i>
                 </div>
                 <div>
-                    <h3 class="text-dark mb-0 font-weight-500">25</h3>
+                    <h3 class="text-dark mb-0 font-weight-500">{{ count($totalInativos) }}</h3>
                     <p class="text-mute mb-0">Inativos</p>
                 </div>
             </div>
@@ -198,21 +198,28 @@
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-        ['Plano', 'Prazo'],
-        ['12 meses', 15],
-        ['24 meses', 36],
-        ['36 meses', 42],
-        ]);
+        fetch('{{ route("admin.ajax.planos") }}')
+        .then( result => result.json())
+        .then((result) => {
+            let dados = [
+                [ 'Plano', 'Prazo' ]
+            ]
+            if(result.data.length > 0){
+                result.data.forEach(value => {
+                    dados.push(value)
+                })
+            }
+            let data = google.visualization.arrayToDataTable(dados);
+            let options = {
+                title: '',
+                pieHole: 0.4,
+                chartArea:{left:10,top:10,width:"100%",height:"100%"},
+            };
 
-        var options = {
-        title: '',
-        pieHole: 0.4,
-        chartArea:{left:10,top:10,width:"100%",height:"100%"},
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
+            let chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        })
+        .catch(erro => { console.log(erro); alert("Plano não pode ser carregado") })
     }
 </script>
 <div class="col-xl-6 col-12">
@@ -236,21 +243,28 @@
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-        ['Categoria', 'Associados'],
-        ['Militar da Ativa', 75],
-        ['Militar da Reserva', 52],
-        ['Civil', 37],
-        ]);
+        fetch('{{ route("admin.ajax.categorias") }}')
+        .then( result => result.json())
+        .then((result) => {
+            let dados = [
+                ['Categoria', 'Associados']
+            ]
+            if(result.data.length > 0){
+                result.data.forEach(value => {
+                    dados.push(value)
+                })
+            }
+            let data = google.visualization.arrayToDataTable(dados);
+            let options = {
+                title: '',
+                pieHole: 0.4,
+                chartArea:{left:10,top:10,width:"100%",height:"100%"},
+            };
 
-        var options = {
-        title: '',
-        pieHole: 0.4,
-        chartArea:{left:10,top:10,width:"100%",height:"100%"},
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart2'));
-        chart.draw(data, options);
+            let chart = new google.visualization.PieChart(document.getElementById('donutchart2'));
+            chart.draw(data, options);
+        })
+        .catch(erro => { console.log(erro); alert("Plano não pode ser carregado") })
     }
 </script>
 <div class="col-xl-6 col-12">
