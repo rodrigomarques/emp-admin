@@ -18,19 +18,19 @@
             </div>
         </div>
         <div id="cadastroDependente" style="display:none;">
-        <form action="{{ route('associado.passo4') }}" method="post">
+        <form action="{{ route('associado.passo3-save', ['idassociado' => $idassociado]) }}" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <input type="text" name="nome" class="form-control pl-15 bg-transparent phone" placeholder="Nome">
+                            <input type="text" name="nome" class="form-control pl-15 bg-transparent" placeholder="Nome" value="{{ old('nome', '') }}" >
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <input type="text" name="email" class="form-control pl-15 bg-transparent" placeholder="E-mail">
+                            <input type="text" name="email" class="form-control pl-15 bg-transparent" placeholder="E-mail" value="{{ old('email', '') }}" >
                         </div>
                     </div>
                 </div>
@@ -39,24 +39,24 @@
             <div class="col-md-3">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <input type="text" name="data" class="form-control pl-15 bg-transparent" placeholder="Data de Nascimento">
+                            <input type="date" name="dt_nascimento" class="form-control pl-15 bg-transparent" placeholder="Data de Nascimento" value="{{ old('dt_nascimento', '') }}" >
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <input type="text" name="cpf" class="form-control pl-15 bg-transparent" placeholder="CPF">
+                            <input type="text" name="cpf" class="form-control pl-15 bg-transparent" placeholder="CPF" value="{{ old('cpf', '') }}" >
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <select class="custom-select form-control" id="" name="plano">
-                                <option>Sexo</option>
-                                <option>Masculino</option>
-                                <option>Feminino</option>
+                            <select class="custom-select form-control" id="" name="sexo">
+                                <option value="">Sexo</option>
+                                <option @if(old('sexo', '') == "M") selected @endif value="M">Masculino</option>
+                                <option @if(old('sexo', '') == "F") selected @endif value="F">Feminino</option>
                             </select>
                         </div>
                     </div>
@@ -64,11 +64,11 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <select class="custom-select form-control" id="" name="plano">
+                            <select class="custom-select form-control" id="" name="parentesco">
                                 <option>Grau de Parentesco</option>
-                                <option>Cônjuge</option>
-                                <option>Filho(a)</option>
-                                <option>Pai/Mãe</option>
+                                <option @if(old('parentesco', '') == "CÔNJUGE") selected @endif>Cônjuge</option>
+                                <option @if(old('parentesco', '') == "FILHO") selected @endif>Filho(a)</option>
+                                <option @if(old('parentesco', '') == "PAI/MÃE") selected @endif>Pai/Mãe</option>
                             </select>
                         </div>
                     </div>
@@ -86,17 +86,17 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                    <a href="{{ route('associado.passo2') }}" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</a>
+                    <a href="{{ route('associado.passo2', ['idassociado' => $idassociado]) }}" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</a>
                     <button type="submit" class="btn mt-10" style="background: #162647; color: #FFF;">Avançar</button>
                 </div>
             </div>
             </form>
         </div>
         <div id="concluir">
-            <form action="{{ route('associado.passo4') }}" method="post">
+            <form action="{{ route('associado.passo4', ['idassociado' => $idassociado]) }}" method="post">
             <div class="row">
                 <div class="col-12 text-center">
-                    <a href="{{ route('associado.passo2') }}" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</a>
+                    <a href="{{ route('associado.passo2', ['idassociado' => $idassociado]) }}" class="btn mt-10" style="background: #16264761; color: #FFF;">Voltar</a>
                     <button type="submit" class="btn mt-10" style="background: #162647; color: #FFF;">Concluir Cadastro</button>
                 </div>
             </div>

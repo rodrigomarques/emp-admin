@@ -15,9 +15,13 @@ Route::prefix('associado')->name("associado.")->group(function () {
     Route::get('passo-1', [AssociadoController::class, 'passo1'])->name("passo1");
     Route::post('save/passo-1', [AssociadoController::class, 'passo1Save'])->name("passo1-save");
 
-    Route::match(['get','post'], 'passo-2', [AssociadoController::class, 'passo2'])->name("passo2");
-    Route::match(['get','post'], 'passo-3', [AssociadoController::class, 'passo3'])->name("passo3");
-    Route::match(['get','post'], 'passo-4', [AssociadoController::class, 'passo4'])->name("passo4");
+    Route::match(['get','post'], 'passo-2/{idassociado}', [AssociadoController::class, 'passo2'])->name("passo2");
+    Route::post('save/passo-2/{idassociado}', [AssociadoController::class, 'passo2Save'])->name("passo2-save");
+
+    Route::match(['get','post'], 'passo-3/{idassociado}', [AssociadoController::class, 'passo3'])->name("passo3");
+    Route::match(['get','post'], 'save/passo-3/{idassociado}', [AssociadoController::class, 'passo3Save'])->name("passo3-save");
+
+    Route::match(['get','post'], 'passo-4/{idassociado}', [AssociadoController::class, 'passo4'])->name("passo4");
 });
 
 Route::match(['get','post'], '/login', [LoginController::class, 'login'])->name("login");

@@ -25,4 +25,12 @@ class Associado extends RModel
         'forma_pagamento.required' => 'Forma de pagamento é obrigatório',
         'plano.required' => 'Plano é obrigatório',
     ];
+
+    public function usuario(){
+        return $this->belongsTo(Usuario::class, "usuario_id");
+    }
+
+    public function subcategoria(){
+        return $this->belongsTo(SubCategoria::class, "subcategoria_id");
+    }
 }

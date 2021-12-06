@@ -22,6 +22,7 @@ class CreateTableDependentes extends Migration
             $table->string("sexo", 2);
             $table->string("parentesco", 50);
             $table->string("documento", 150)->nullable();
+            $table->string("cpf", 50);
 
             $table->bigInteger("associado_id")->unsigned();
 

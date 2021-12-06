@@ -14,10 +14,17 @@ class Dependente extends RModel
     ];
 
     protected $rules = [
-
+        'cpf' => 'required',
+        'email' => 'required|email',
+        'dt_nascimento' => 'nullable|date_format:Y-m-d',
+        'parentesco' => 'required',
     ];
 
     protected $messages = [
-
+        'cpf.required' => 'CPF é obrigatório',
+        'email.required' => 'E-mail é obrigatório',
+        'email.email' => 'E-mail inválido',
+        'dt_nascimento.date_format' => 'Data de Nascimento é inválida',
+        'parentesco.required' => 'Parentesco é obrigatório',
     ];
 }
