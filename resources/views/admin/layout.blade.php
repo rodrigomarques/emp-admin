@@ -103,7 +103,7 @@
 							</span>
 						</a>
 						<ul class="treeview-menu" style="">
-							<li><a href="associados.php">Associados</a></li>
+							<li><a href="{{ route('admin.associado.buscar') }}">Associados</a></li>
 							<li><a href="associadosAguardando.php">Aguardando Aprovação</a></li>
 							<li><a href="dependentes.php">Dependentes</a></li>
 						</ul>

@@ -45,4 +45,9 @@ Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")-
         Route::match(['get', 'post'], '/ajax-buscar', [CupomController::class, 'ajaxBuscar'])->name("ajax.buscar");
     });
 
+    Route::prefix('associado')->name("associado.")->group(function () {
+        Route::match(['get', 'post'], '/buscar', [AssociadoController::class, 'adminBuscar'])->name("buscar");
+        Route::match(['get', 'post'], '/ajax-buscar', [AssociadoController::class, 'adminAjaxBuscar'])->name("ajax.buscar");
+    });
+
 });

@@ -7,7 +7,9 @@ use App\Models\SubCategoria;
 use App\Models\Usuario;
 use App\Models\Endereco;
 use App\Models\Associado;
-
+use App\Util\Html;
+use App\Util\Format;
+use App\Dto\ParamDataTable;
 use App\Services\AssociadoService;
 class AssociadoController extends Controller
 {
@@ -116,5 +118,65 @@ class AssociadoController extends Controller
         }
         session()->flash('error', "Associado não pode ser sucesso!");
         return back();
+    }
+
+    public function adminBuscar(){
+        $data = [];
+        return view("admin/associado/buscar", $data);
+    }
+
+    public function adminAjaxBuscar(Request $request){
+        $value = $request->input("search", []);
+        $order = $request->input("order", []);
+
+        $draw = $request->query("draw", 1);
+
+        $begin = $request->input("start", 0);
+        $end = $request->input("length", 10);
+        $orderField = "";
+        $orderDirection = "ASC";
+
+        $search = "";
+        if(isset($value["value"])){
+            $search = $value["value"];
+        }
+
+        /*if (count($order) > 0) {
+            $itemOrdem = $order[0];
+            $orderField = $itemOrdem["column"];
+            $orderDirection = $itemOrdem["dir"];
+        }*/
+
+        $paramDataTable = ParamDataTable::init($draw, $begin, $end, $orderField, $orderDirection);
+        $paramDataTable->setSearch($search);
+
+        $associadoService = new AssociadoService();
+        $dataLista = $associadoService->buscar($paramDataTable);
+
+        $data = [];
+        if(count($dataLista["data"]) > 0){
+            $associadoGrid = array_map(function($associado) use($associadoService){
+                $dataLista = [
+                    Html::status($associado["statusassoc"]),
+                    $associado["categoria"],
+                    $associado["nome"],
+                    $associado["email"],
+                    $associado["telefone_cel"],
+                    $associado["cpf"],
+                    Format::fnDateView($associado["created_at"]),
+                    Html::linkDataTable($associado["idassociado"], "fa fa-pencil", 'btn-edit'),
+                    Html::linkDataTable($associado["idassociado"], "fa fa-trash", 'btn-del')
+                ];
+                return $dataLista;
+            }, $dataLista["data"]->toArray());
+            $data = $associadoGrid;
+        }
+
+        return response()->json([
+            "draw" => $draw,
+            "recordsTotal" => $dataLista["count"],
+            "recordsFiltered"=>  $dataLista["count"],
+            "data" => $data
+        ]);
     }
 }

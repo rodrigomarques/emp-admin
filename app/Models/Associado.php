@@ -11,7 +11,13 @@ class Associado extends RModel
         'plano', 'documento', 'usuario_id', 'status'];
 
     public static $dataTableViewColumns = [
-
+        'status',
+        'subcategoria_id',
+        'nome',
+        'email',
+        'celular',
+        'cpf',
+        'created_at'
     ];
 
     protected $rules = [

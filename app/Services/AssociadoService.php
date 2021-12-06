@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\Dependente;
+use App\Repositories\AssociadoRepository;
+use App\Dto\ParamDataTable;
 
 class AssociadoService
 {
@@ -245,5 +247,20 @@ class AssociadoService
 
         $sql .= " GROUP BY c.id ";
         return \DB::select($sql);
+    }
+
+    public function buscar(ParamDataTable $param): array{
+        $repository = new AssociadoRepository();
+        $total = $repository->searchCount($param);
+        $data = [
+            'count' => $total,
+            'data' => []
+        ];
+
+        if($total > 0){
+            $data['data'] = $repository->search($param)->get(["*", "associados.id as idassociado", "associados.status as statusassoc"]);
+        }
+
+        return $data;
     }
 }
