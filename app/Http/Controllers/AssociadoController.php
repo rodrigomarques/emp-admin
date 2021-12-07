@@ -155,7 +155,7 @@ class AssociadoController extends Controller
                 $dataLista = [
                     Html::status($associado["statusassoc"]),
                     $associado["categoria"],
-                    $associado["nome"],
+                    Html::linkDataTable($associado["idassociado"], '', ' btn-ver ', $associado["nome"], 'verDetalhes'),
                     $associado["email"],
                     $associado["telefone_cel"],
                     $associado["cpf"],

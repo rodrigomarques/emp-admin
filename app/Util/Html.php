@@ -19,9 +19,10 @@ class Html
         return "<span class='badge badge-pill badge-success'>${value}</span>";
     }
 
-    public static function linkDataTable($id, $class = "", $classBtn = "", $textLink = "")
+    public static function linkDataTable($id, $class = "", $classBtn = "", $textLink = "", $function = null)
     {
         if($textLink == "") $textLink = "<i class='${class}'></i>";
-        return "<a href='#' data-id='${id}' class='${classBtn}'>${textLink}</a>";
+        if($function != null) $function = "onclick='${function}(this)'";
+        return "<a href='#' data-id='${id}' class='${classBtn}' ${function}>${textLink}</a>";
     }
 }

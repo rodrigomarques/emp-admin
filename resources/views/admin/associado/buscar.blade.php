@@ -7,7 +7,7 @@
     <div class="box-body"><br>
 
     <div class="table-responsive">
-            <table id="tabela-cupom" class="datatable table table-bordered table-hover table-striped display nowrap margin-top-10 w-p100">
+            <table id="tabela-associado" class="datatable table table-bordered table-hover table-striped display nowrap margin-top-10 w-p100">
             <thead>
                 <tr>
                     <th>Status</th>
@@ -66,4 +66,5 @@
         var table = $(".datatable").DataTable(dataTableOptions); // End of use strict
         })
 	</script>
+    <script src="{{ asset('js/associado/index.js') }}?v={{ time() }}"></script>
 @endsection
