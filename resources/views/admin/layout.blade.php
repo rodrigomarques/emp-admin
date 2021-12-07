@@ -104,8 +104,8 @@
 						</a>
 						<ul class="treeview-menu" style="">
 							<li><a href="{{ route('admin.associado.buscar') }}">Associados</a></li>
-							<li><a href="associadosAguardando.php">Aguardando Aprovação</a></li>
-							<li><a href="dependentes.php">Dependentes</a></li>
+							<li><a href="{{ route('admin.associado.aguardando.aprovacao') }}">Aguardando Aprovação</a></li>
+							<li><a href="{{ route('admin.associado.dependentes') }}">Dependentes</a></li>
 						</ul>
 					</li>
 					<li class="treeview menu-open">

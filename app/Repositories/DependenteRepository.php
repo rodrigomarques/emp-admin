@@ -2,17 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\Associado;
+use App\Models\Dependente;
 use App\Models\Status;
 
 use App\Dto\ParamDataTable;
 
-class AssociadoRepository
+class DependenteRepository
 {
     public function search(ParamDataTable $param) {
-        $query = new Associado();
-        $query = $query->join("subcategorias", "subcategorias.id", "=", "associados.subcategoria_id");
-        $query = $query->join("categorias", "subcategorias.categoria_id", "=", "categorias.id");
+        $query = new Dependente();
+        $query = $query->join("associados", "dependentes.associado_id", "=", "associados.id");
         $query = $query->join("usuarios", "usuarios.id", "=", "associados.usuario_id");
 
         if($param->getSearch() != null && $param->getSearch() != ""){
@@ -24,27 +23,18 @@ class AssociadoRepository
             });
         }
 
-        if(count($param->getCondicional()) > 0){
-            $condicional = $param->getCondicional();
-            foreach($condicional as $key => $cond){
-                $query = $query->where($key, $cond);
-            }
-        }
-
         $query = $query->offset($param->getBegin())
                         ->limit($param->getEnd());
-        if(isset(Associado::$dataTableViewColumns[$param->getOrderField()])){
-            $query = $query->orderBy(Associado::$dataTableViewColumns[$param->getOrderField()], $param->getOrderDirection());
+        if(isset(Dependente::$dataTableViewColumns[$param->getOrderField()])){
+            $query = $query->orderBy(Dependente::$dataTableViewColumns[$param->getOrderField()], $param->getOrderDirection());
         }
 
         return $query;
     }
 
     public function searchCount(ParamDataTable $param) {
-        $query = new Associado();
-
-        $query = $query->join("subcategorias", "subcategorias.id", "=", "associados.subcategoria_id");
-        $query = $query->join("categorias", "subcategorias.categoria_id", "=", "categorias.id");
+        $query = new Dependente();
+        $query = $query->join("associados", "dependentes.associado_id", "=", "associados.id");
         $query = $query->join("usuarios", "usuarios.id", "=", "associados.usuario_id");
 
         if($param->getSearch() != null && $param->getSearch() != ""){
@@ -54,13 +44,6 @@ class AssociadoRepository
                 $q = $q->orWhere("usuarios.nome", "like", "%" . $search . "%");
                 $q = $q->orWhere("usuarios.email", "like", "%" . $search . "%");
             });
-        }
-
-        if(count($param->getCondicional()) > 0){
-            $condicional = $param->getCondicional();
-            foreach($condicional as $key => $cond){
-                $query = $query->where($key, $cond);
-            }
         }
 
        return $query->count();

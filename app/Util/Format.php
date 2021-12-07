@@ -14,8 +14,12 @@ class Format
         return "${symbol}0,00";
     }
 
-    public static function fnDateView($date){
+    public static function fnDateView($date, $complete = false){
         try{
+            if($complete){
+                $carbonDate = \Carbon\Carbon::parse($date);
+                return $carbonDate->format("d/m/Y H:i:s");
+            }
             $carbonDate = \Carbon\Carbon::createFromFormat("Y-m-d", $date);
             return $carbonDate->format("d/m/Y");
         }catch(\Exception $e){

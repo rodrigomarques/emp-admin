@@ -10,7 +10,12 @@ class Dependente extends RModel
     protected $fillable = ['nome', 'email', 'dt_nascimento', 'cpf', 'sexo', 'parentesco', 'documento', 'associado_id'];
 
     public static $dataTableViewColumns = [
-
+        'nome',
+        'email',
+        'dt_nascimento',
+        'cpf',
+        'sexo',
+        'parentesco'
     ];
 
     protected $rules = [

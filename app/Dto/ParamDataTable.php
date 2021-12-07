@@ -11,6 +11,7 @@ class ParamDataTable
     private $search;
     private $orderField;
     private $orderDirection;
+    private $condicional = [];
 
     public function __construct(){
         $this->draw = 1;
@@ -145,6 +146,26 @@ class ParamDataTable
     public function setOrderDirection($orderDirection)
     {
         $this->orderDirection = $orderDirection;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of condicional
+     */
+    public function getCondicional()
+    {
+        return $this->condicional;
+    }
+
+    /**
+     * Set the value of condicional
+     *
+     * @return  self
+     */
+    public function setCondicional($condicional)
+    {
+        $this->condicional = $condicional;
 
         return $this;
     }

@@ -48,6 +48,12 @@ Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")-
     Route::prefix('associado')->name("associado.")->group(function () {
         Route::match(['get', 'post'], '/buscar', [AssociadoController::class, 'adminBuscar'])->name("buscar");
         Route::match(['get', 'post'], '/ajax-buscar', [AssociadoController::class, 'adminAjaxBuscar'])->name("ajax.buscar");
+
+        Route::match(['get', 'post'], '/aguardando-aprovacao', [AssociadoController::class, 'adminAguardandoAprovacao'])->name("aguardando.aprovacao");
+        Route::match(['get', 'post'], '/ajax-aguardando-aprovacao', [AssociadoController::class, 'adminAjaxAguardandoAprovacao'])->name("ajax.aguardando.aprovacao");
+
+        Route::match(['get', 'post'], '/dependentes', [AssociadoController::class, 'adminDependentes'])->name("dependentes");
+        Route::match(['get', 'post'], '/ajax-dependentes', [AssociadoController::class, 'adminAjaxDependentes'])->name("ajax.dependentes");
     });
 
 });
