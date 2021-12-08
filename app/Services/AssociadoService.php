@@ -180,6 +180,7 @@ class AssociadoService
 
             \DB::beginTransaction();
             $dependente->associado_id = $associado->id;
+            $dependente->status = Status::AGUARDANDO_LIBERACAO;
             $dependente->save();
             \DB::commit();
             $response->setStatus(200);
@@ -301,6 +302,8 @@ class AssociadoService
             $historico->tipo = Perfil::ASSOCIADO;
             $historico->referencia_id = $associado->id;
             $historico->save();
+
+            \DB::update("UPDATE dependentes SET status = ? WHERE associado_id = ?", [$status, $associado->id]);
 
             \DB::commit();
             $response->setStatus(200);
