@@ -25,4 +25,9 @@ class DependenteService
 
         return $data;
     }
+
+    public function getIdAssociado($idAssociado){
+        $dep = Dependente::where("associado_id", $idAssociado);
+        return $dep->get();
+    }
 }

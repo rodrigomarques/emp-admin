@@ -45,6 +45,6 @@ class Associado extends RModel
     }
 
     public function dependentes(){
-        return $this->hasMany(Dependentes::class, "associado_id");
+        return $this->hasMany(Dependente::class, "associado_id");
     }
 }

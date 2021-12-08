@@ -213,7 +213,7 @@ class AssociadoController extends Controller
                     Html::linkDataTable($associado["idassociado"], "fa fa-check", 'btn-aprovar'),
                     Html::status($associado["statusassoc"]),
                     $associado["categoria"],
-                    $associado["nome"],
+                    Html::linkDataTable($associado["idassociado"], '', ' btn-ver ', $associado["nome"], 'verDetalhes'),
                     $associado["email"],
                     $associado["telefone_cel"],
                     $associado["cpf"],
@@ -266,7 +266,7 @@ class AssociadoController extends Controller
             $associadoGrid = array_map(function($dependente){
                 $dataLista = [
                     Html::status($dependente["statusassoc"]),
-                    Html::linkDataTable($dependente["idassociado"], '', '', $dependente["nomeusu"]),
+                    Html::linkDataTable($dependente["idassociado"], '', ' btn-ver ', $dependente["nomeusu"], 'verDetalhes'),
                     $dependente["nome"],
                     $dependente["email"],
                     Format::fnDateView($dependente["dt_nascimento"]),
@@ -291,9 +291,15 @@ class AssociadoController extends Controller
 
     public function adminAjaxDetalhes($idassociado, Request $request){
         $service = new AssociadoService();
+        $serviceDep = new DependenteService();
+
         $associado = $service->getAssociadoById($idassociado);
+        $deps = $serviceDep->getIdAssociado($idassociado);
+
         $data = [];
         $data["associado"] = $associado;
+        $data["deps"] = $deps;
+
         return view("admin/associado/ajax-detalhes", $data);
     }
 }
