@@ -9,6 +9,7 @@ use App\Models\Perfil;
 use App\Models\File;
 use App\Models\Endereco;
 use App\Models\SubCategoria;
+use App\Models\HistoricoAlteracaoStatus;
 use App\Responses\ResponseEntity;
 use Illuminate\Http\Request;
 use Hash;
@@ -85,6 +86,7 @@ class AssociadoService
             $associado->status  = Status::EM_PROCESSO;
             $associado->usuario_id = $usuario->id;
             $associado->save();
+
             \DB::commit();
             $response->setEntity([
                 'user' => $usuario,
@@ -292,6 +294,14 @@ class AssociadoService
 
             $usuario->status = $status;
             $usuario->save();
+
+            $historico = new HistoricoAlteracaoStatus;
+            $historico->dt_operacao = \Carbon\Carbon::now()->format("Y-m-d");
+            $historico->status = $status;
+            $historico->tipo = Perfil::ASSOCIADO;
+            $historico->referencia_id = $associado->id;
+            $historico->save();
+
             \DB::commit();
             $response->setStatus(200);
         } catch (\Exception $e) {
