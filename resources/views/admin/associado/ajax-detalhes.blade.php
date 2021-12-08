@@ -31,7 +31,7 @@
         Nome: {{ $dep->nome }}<br>
         E-mail: {{ $dep->email }}<br>
         CPF: {{ $dep->cpf }}<br>
-        Data de Nascimento: {{ $dep->dt_nascimento }}<br>
+        Data de Nascimento: {{ \App\Util\Format::fnDateView($dep->dt_nascimento) }}<br>
         Sexo: {{ $dep->sexo }}<br>
         Parentesco: {{ $dep->parentesco }}
     </div>

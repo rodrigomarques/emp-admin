@@ -161,7 +161,7 @@ class AssociadoController extends Controller
                     $associado["cpf"],
                     Format::fnDateView($associado["created_at"], true),
                     Html::linkDataTable($associado["idassociado"], "fa fa-pencil", 'btn-edit'),
-                    Html::linkDataTable($associado["idassociado"], "fa fa-trash", 'btn-del')
+                    Html::linkDataTable($associado["idassociado"], "fa fa-trash", 'btn-del', '', 'deletarAssociado')
                 ];
                 return $dataLista;
             }, $dataLista["data"]->toArray());
@@ -210,7 +210,7 @@ class AssociadoController extends Controller
         if(count($dataLista["data"]) > 0){
             $associadoGrid = array_map(function($associado) use($associadoService){
                 $dataLista = [
-                    Html::linkDataTable($associado["idassociado"], "fa fa-check", 'btn-aprovar'),
+                    Html::linkDataTable($associado["idassociado"], "fa fa-check", 'btn-aprovar', '', 'aprovarAssociado'),
                     Html::status($associado["statusassoc"]),
                     $associado["categoria"],
                     Html::linkDataTable($associado["idassociado"], '', ' btn-ver ', $associado["nome"], 'verDetalhes'),
@@ -219,7 +219,7 @@ class AssociadoController extends Controller
                     $associado["cpf"],
                     Format::fnDateView($associado["created_at"], true),
                     Html::linkDataTable($associado["idassociado"], "fa fa-pencil", 'btn-edit'),
-                    Html::linkDataTable($associado["idassociado"], "fa fa-trash", 'btn-del')
+                    Html::linkDataTable($associado["idassociado"], "fa fa-trash", 'btn-del', '', 'deletarAssociado')
                 ];
                 return $dataLista;
             }, $dataLista["data"]->toArray());
@@ -274,7 +274,7 @@ class AssociadoController extends Controller
                     $dependente["parentesco"],
                     Format::fnDateView($dependente["created_at"], true),
                     Html::linkDataTable($dependente["idassociado"], "fa fa-pencil", 'btn-edit'),
-                    Html::linkDataTable($dependente["idassociado"], "fa fa-trash", 'btn-del')
+                    Html::linkDataTable($dependente["idassociado"], "fa fa-trash", 'btn-del', '', '')
                 ];
                 return $dataLista;
             }, $dataLista["data"]->toArray());
@@ -301,5 +301,41 @@ class AssociadoController extends Controller
         $data["deps"] = $deps;
 
         return view("admin/associado/ajax-detalhes", $data);
+    }
+
+    public function adminAjaxAprovar($idassociado, Request $request){
+        $service = new AssociadoService();
+        $result = $service->alterarAssociado($idassociado, Status::ATIVO);
+
+        if ($result->getStatus() === 200) {
+            session()->flash('success', "Associado aprovado com sucesso!");
+            return response()->json([
+                'status' => 'ok'
+            ]);
+        }
+
+        session()->flash('error', "Não pode aprovar o associado");
+        return response()->json([
+            'status' => 'erro',
+            'msg' => implode("<br>", $result->getErrors())
+        ]);
+    }
+
+    public function adminAjaxExcluir($idassociado, Request $request){
+        $service = new AssociadoService();
+        $result = $service->alterarAssociado($idassociado, Status::INATIVO);
+
+        if ($result->getStatus() === 200) {
+            session()->flash('success', "Associado alterado com sucesso!");
+            return response()->json([
+                'status' => 'ok'
+            ]);
+        }
+
+        session()->flash('error', "Não pode alterado o associado");
+        return response()->json([
+            'status' => 'erro',
+            'msg' => implode("<br>", $result->getErrors())
+        ]);
     }
 }

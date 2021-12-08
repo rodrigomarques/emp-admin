@@ -68,26 +68,23 @@
         var table = $(".datatable").DataTable(dataTableOptions); // End of use strict
         })
 
-        const verDetalhes = (event) => {
-            let id = event.getAttribute("data-id");
-            $(".modal-component").modal("show");
+        let url ='{{ route("admin.associado.ajax.detalhes", ["idassociado" => ":pidassociado"]) }}';
+        let urlExcluir ='{{ route("admin.associado.ajax.excluir", ["idassociado" => ":pidassociado"]) }}';
 
-            $("#modal-title-text").html("ASSOCIADO")
-
-            let url = '{{ route("admin.associado.ajax.detalhes", ["idassociado" => ":pidassociado"]) }}'
+        const aprovarAssociado = (event) => {
+            let url ='{{ route("admin.associado.ajax.aprovar", ["idassociado" => ":pidassociado"]) }}';
+            let id = event.getAttribute("data-id")
             url = url.replace(":pidassociado", id)
-            console.log(url)
 
             fetch(url)
-            .then((result) => result.text())
+            .then((result) => result.json())
             .then((result) => {
-                $(".modal-body-content").html(result);
+                location.reload()
             })
             .catch((erro) => {
-                console.log(erro);
-                alert("Associado não pode ser carregado");
+                alert("Associado não pode ser aprovado");
             });
-
         }
 	</script>
+    <script src="{{ asset('js/associado/index.js') }}?v={{ time() }}"></script>
 @endsection

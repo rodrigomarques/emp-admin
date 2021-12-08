@@ -272,4 +272,36 @@ class AssociadoService
         $associado = $associado->where("associados.id", $id);
         return $associado->first();
     }
+
+    public function alterarAssociado($idAssociado, $status): ResponseEntity
+    {
+        $response = new ResponseEntity();
+        try {
+
+            $associado = Associado::find($idAssociado);
+            if(!$associado){
+                $response->setStatus(400);
+                $response->addError("Associado não encontrado");
+                return $response;
+            }
+            $usuario = Usuario::find($associado->usuario_id);
+
+            \DB::beginTransaction();
+            $associado->status = $status;
+            $associado->save();
+
+            $usuario->status = $status;
+            $usuario->save();
+            \DB::commit();
+            $response->setStatus(200);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            $response->setStatus(500);
+            \Log::error("Erro ao aprovar o associado", [ $e->getMessage()]);
+            $response->addError("Erro ao aprovar o Associado");
+            throw new \Exception("Não pode aprovar o associado");
+        }
+
+        return $response;
+    }
 }
