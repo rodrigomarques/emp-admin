@@ -263,4 +263,13 @@ class AssociadoService
 
         return $data;
     }
+
+    public function getAssociadoById($id) : Associado{
+        $associado = Associado::join("usuarios", "usuarios.id", "=", "associados.usuario_id")
+                            ->leftJoin("enderecos", "enderecos.associado_id", "=", "associados.id")
+                            ->leftJoin("subcategorias", "subcategorias.id", "=", "associados.subcategoria_id")
+                            ->leftJoin("categorias", "subcategorias.categoria_id", "=", "categorias.id");
+        $associado = $associado->where("associados.id", $id);
+        return $associado->first();
+    }
 }

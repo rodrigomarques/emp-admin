@@ -216,14 +216,17 @@
 
     <div class="control-sidebar-bg"></div>
 
-    <div class="modal fade modal-aluno" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade modal-component" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Nome do Associado</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel"><span id="modal-title-text"></span></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
+                    <div class="modal-body-content">
+
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger text-left" data-dismiss="modal">Fechar</button>

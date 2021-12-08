@@ -39,4 +39,12 @@ class Associado extends RModel
     public function subcategoria(){
         return $this->belongsTo(SubCategoria::class, "subcategoria_id");
     }
+
+    public function endereco(){
+        return $this->hasOne(Endereco::class, "associado_id");
+    }
+
+    public function dependentes(){
+        return $this->hasMany(Dependentes::class, "associado_id");
+    }
 }

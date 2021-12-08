@@ -288,4 +288,12 @@ class AssociadoController extends Controller
             "data" => $data
         ]);
     }
+
+    public function adminAjaxDetalhes($idassociado, Request $request){
+        $service = new AssociadoService();
+        $associado = $service->getAssociadoById($idassociado);
+        $data = [];
+        $data["associado"] = $associado;
+        return view("admin/associado/ajax-detalhes", $data);
+    }
 }
