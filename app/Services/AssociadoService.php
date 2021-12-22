@@ -276,6 +276,15 @@ class AssociadoService
         return $associado->first();
     }
 
+    public function getAssociadoByUsuario($id) : Associado{
+        $associado = Associado::join("usuarios", "usuarios.id", "=", "associados.usuario_id")
+                            ->leftJoin("enderecos", "enderecos.associado_id", "=", "associados.id")
+                            ->leftJoin("subcategorias", "subcategorias.id", "=", "associados.subcategoria_id")
+                            ->leftJoin("categorias", "subcategorias.categoria_id", "=", "categorias.id");
+        $associado = $associado->where("usuarios.id", $id);
+        return $associado->first();
+    }
+
     public function alterarAssociado($idAssociado, $status): ResponseEntity
     {
         $response = new ResponseEntity();

@@ -38,7 +38,10 @@
 	  <div class="app-menu">
 		<ul class="header-megamenu nav">
 			<li class="btn-group nav-item d-none d-xl-inline-block" style="padding-left: 20px;">
-				Olá <strong>Nome Sobrenome</strong>
+                @php
+                    $user = \Auth::user();
+                @endphp
+				Olá <strong>{{ $user->nome }}</strong>
 			</li>
 		</ul>
 	  </div>
@@ -141,7 +144,7 @@
         @if(auth()->user() && auth()->user()->isRoleOnlyAssociado())
 		<ul class="sidebar-menu" data-widget="tree">
 					<li>
-						<a href="perfil.php">
+						<a href="{{ route('admin.meus-dados') }}">
 							<i class="fa fa-user" aria-hidden="true"></i>
 							<span>MEUS DADOS</span>
 						</a>

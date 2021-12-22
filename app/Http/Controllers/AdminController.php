@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Associado;
 use App\Models\Dependente;
 use App\Models\Status;
+use App\Models\SubCategoria;
 use Log;
+use Auth;
 use App\Services\AssociadoService;
 class AdminController extends Controller
 {
@@ -30,6 +32,15 @@ class AdminController extends Controller
         }
 
         return view("admin/home", $data);
+    }
+
+    public function meusDados(){
+        $data = [];
+        $associadoService = new AssociadoService();
+        $user = Auth::user();
+        $data["listSubCategoria"] = SubCategoria::all();
+        $data["associado"] = $associadoService->getAssociadoByUsuario($user->id);
+        return view("admin/meus-dados", $data);
     }
 
     public function ajaxPlanos(Request $request){

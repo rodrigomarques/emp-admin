@@ -28,7 +28,12 @@ class LoginController extends Controller
             if (Auth::attempt(['email' => $username, 'password' => $password, 'status' => Status::ATIVO])) {
                 $request->session()->regenerate();
                 $user = \Auth::user();
-                return redirect()->route('admin.home');
+
+                if($user->isRoleAdmin()){
+                    return redirect()->route('admin.home');
+                }else{
+                    return redirect()->route('admin.meus-dados');
+                }
             }else{
                 $request->session()->flash('error', 'Login / Senha inválidos');
             }
