@@ -107,32 +107,36 @@
                         google.charts.load("current", {packages:['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
-                            var data = google.visualization.arrayToDataTable([
-                            ["Mês", "Associados", { role: "style" } ],
-                            ["Maio", 12, "#6d9cf3"],
-                            ["Junho", 30, "#6d9cf3"],
-                            ["Julho", 35, "#6d9cf3"],
-                            ["Agosto", 40, "#6d9cf3"],
-                            ["Setembro", 42, "#6d9cf3"],
-                            ["Outubro", 100, "#6d9cf3"],
-                            ]);
-
-                            var view = new google.visualization.DataView(data);
-                            view.setColumns([0, 1,
+                            fetch('{{ route("admin.ajax.associados.ativos") }}')
+                            .then( result => result.json())
+                            .then((result) => {
+                                let dados = [
+                                    ["Mês", "Associados", { role: "style" } ],
+                                ]
+                                if(result.data.length > 0){
+                                    result.data.forEach(value => {
+                                        dados.push(value)
+                                    })
+                                }
+                                let data = google.visualization.arrayToDataTable(dados);
+                                var view = new google.visualization.DataView(data);
+                                view.setColumns([0, 1,
                                             { calc: "stringify",
                                                 sourceColumn: 1,
                                                 type: "string",
                                                 role: "annotation" },
                                             2]);
+                                var options = {
+                                    title: "",
+                                    height: 300,
+                                    bar: {groupWidth: "95%"},
+                                    legend: { position: "none" },
+                                };
+                                var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+                                chart.draw(view, options);
+                            })
+                            .catch(erro => { console.log(erro); alert("Associados ativos não podem ser carregado") })
 
-                            var options = {
-                            title: "",
-                            height: 300,
-                            bar: {groupWidth: "95%"},
-                            legend: { position: "none" },
-                            };
-                            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-                            chart.draw(view, options);
                         }
                         </script>
                     <div id="columnchart_values" style="width: 100%; height: 300px;"></div>
@@ -162,26 +166,30 @@
                         google.charts.setOnLoadCallback(drawChart);
 
                             function drawChart() {
-                                var data = google.visualization.arrayToDataTable([
-                                    ['', 'Ativos', 'Inativos'],
-                                    ['Maio', 1000, 400],
-                                    ['Junho', 1170, 460],
-                                    ['Julho', 660, 1120],
-                                    ['Agosto', 1030, 540],
-                                    ['Setembro', 1030, 540],
-                                    ['Outubro', 1030, 540],
-                                ]);
-
-                                var options = {
-                                    chart: {
-                                    title: '',
-                                    subtitle: '',
+                                fetch('{{ route("admin.ajax.associados.ativos.inativos") }}')
+                                .then( result => result.json())
+                                .then((result) => {
+                                    let dados = [
+                                        ['', 'Ativos', 'Inativos']
+                                    ]
+                                    if(result.data.length > 0){
+                                        result.data.forEach(value => {
+                                            dados.push(value)
+                                        })
                                     }
-                                };
+                                    let data = google.visualization.arrayToDataTable(dados);
+                                    var options = {
+                                        chart: {
+                                        title: '',
+                                        subtitle: '',
+                                        }
+                                    };
 
-                                var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+                                    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
 
-                                chart.draw(data, google.charts.Bar.convertOptions(options));
+                                    chart.draw(data, google.charts.Bar.convertOptions(options));
+                                })
+                                .catch(erro => { console.log(erro); alert("Associados ativos não podem ser carregado") })
                             }
                         </script>
                     <div id="columnchart_material" style="width: 100%; height: 300px;"></div>

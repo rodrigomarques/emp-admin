@@ -66,4 +66,45 @@ class AdminController extends Controller
             "data" => $categoriasGrid
         ]);
     }
+
+    public function ajaxAssociadosAtivos(Request $request){
+        $associadoService = new AssociadoService();
+        $values = [];
+        for($mes = 5; $mes >= 0; $mes--){
+            $mesAtual = date('m');
+
+            $lista = $associadoService->getCountAssociadosAtivos($mes);
+            $mesExt = \App\Util\Format::getMonth(($mesAtual - $mes));
+            array_push($values, [$mesExt, $lista->total, '#6d9cf3']);
+        }
+
+        return response()->json([
+            "data" => $values
+        ]);
+    }
+
+    public function ajaxAssociadosAtivosInativos(Request $request){
+        $associadoService = new AssociadoService();
+        $lista = $associadoService->getCountAssociadosAtivosInativos();
+
+        $values = [];
+        foreach($lista as $item){
+            $dt = $item->data;
+            $total = $item->total;
+            $status = $item->status;
+
+            if(!array_key_exists($dt, $values)){
+                $values[$dt] = [$dt, 0, 0];
+            }
+            if($status == "ATIVO"){
+                $values[$dt][1] = $total;
+            }else{
+                $values[$dt][2] = $total;
+            }
+        }
+
+        return response()->json([
+            "data" => array_values($values)
+        ]);
+    }
 }

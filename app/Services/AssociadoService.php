@@ -285,6 +285,22 @@ class AssociadoService
         return $associado->first();
     }
 
+    public function getCountAssociadosAtivos($montPast = 0) : object{
+        $select = \DB::select("select count(*) total
+                                from historico_alteracao_status ha inner join associados a on a.id = ha.referencia_id
+                                where DATE_FORMAT(dt_operacao, '%Y%m') <=  DATE_FORMAT(DATE_SUB(now(), INTERVAL " . $montPast . " MONTH), '%Y%m')
+                                and ha.status = 'ATIVO' and tipo = 'ASSOCIADO'");
+        return $select[0];
+    }
+
+    public function getCountAssociadosAtivosInativos() : array{
+        $select = \DB::select("select count(*) total, DATE_FORMAT(dt_operacao, '%Y%m') 'data', status
+                                from historico_alteracao_status
+                                where DATE_FORMAT(dt_operacao, '%Y%m') >=  DATE_FORMAT(DATE_SUB(now(), INTERVAL 6 MONTH), '%Y%m')  and tipo = 'ASSOCIADO'
+                                group by status, DATE_FORMAT(dt_operacao, '%Y%m') order by DATE_FORMAT(dt_operacao, '%Y%m') ASC;");
+        return $select;
+    }
+
     public function alterarAssociado($idAssociado, $status): ResponseEntity
     {
         $response = new ResponseEntity();

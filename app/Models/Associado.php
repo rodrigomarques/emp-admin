@@ -8,7 +8,7 @@ class Associado extends RModel
     public $timestamps = true;
     public $incrementing = true;
     protected $fillable = ['telefone_res', 'telefone_cel', 'sexo', 'cpf', 'subcategoria_id', 'rg', 'nip', 'forma_pagamento',
-        'plano', 'documento', 'usuario_id', 'status'];
+        'plano', 'documento', 'usuario_id', 'status', 'dt_fim_plano'];
 
     public static $dataTableViewColumns = [
         'status',
@@ -46,5 +46,9 @@ class Associado extends RModel
 
     public function dependentes(){
         return $this->hasMany(Dependente::class, "associado_id");
+    }
+
+    public function setCpfAttribute($value) {
+        $this->attributes["cpf"] = preg_replace("/[^0-9]/", "", $value);
     }
 }
