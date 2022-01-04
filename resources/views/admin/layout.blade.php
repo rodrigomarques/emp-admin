@@ -125,7 +125,7 @@
 						</ul>
 					</li>
 					<li>
-						<a href="financeiro.php">
+						<a href="{{ route('admin.financeiro.index') }}">
 						<i class="fa fa-dollar" aria-hidden="true"></i>
 							<span>Financeiro</span>
 						</a>
@@ -150,12 +150,12 @@
 						</a>
 					</li>
 					<li>
-					<a href="meusDependentes.php">
+					<a href="{{ route('admin.associado.meus.dependentes') }}">
 						<i class="fa fa-users"></i>
 						<span>DEPENDENTES</span>
 					</a>
 					<li>
-						<a href="meuFinanceiro.php">
+						<a href="{{ route('admin.financeiro.meus.pagamentos') }}">
 							<i class="fa fa-dollar" aria-hidden="true"></i>
 							<span>MEUS PAGAMENTOS</span>
 						</a>

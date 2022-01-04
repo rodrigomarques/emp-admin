@@ -141,13 +141,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Nova Senha</label>
-                        <input type="text" name="senha" class="form-control" value="" id="">
+                        <input type="password" name="senha" class="form-control" value="" id="">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Repita a Senha</label>
-                        <input type="text" name="senha" class="form-control" value="" id="">
+                        <input type="password" name="senha" class="form-control" value="" id="">
                     </div>
                 </div>
             </div>

@@ -338,4 +338,10 @@ class AssociadoController extends Controller
             'msg' => implode("<br>", $result->getErrors())
         ]);
     }
+
+    public function meusDependentes(Request $request){
+        $data = [];
+
+        return view("admin/associado/meus-dependentes", $data);
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CupomController;
 use App\Http\Controllers\InitController;
+use App\Http\Controllers\FinanceiroController;
 
 Route::get('/init', [InitController::class, 'load'])->name("init.load");
 
@@ -63,6 +64,12 @@ Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")-
         Route::get('/ajax-aprovar/{idassociado}', [AssociadoController::class, 'adminAjaxAprovar'])->name("ajax.aprovar");
         Route::get('/ajax-excluir/{idassociado}', [AssociadoController::class, 'adminAjaxExcluir'])->name("ajax.excluir");
 
+        Route::match(['get', 'post'], '/meus-dependentes', [AssociadoController::class, 'meusDependentes'])->name("meus.dependentes");
+
     });
 
+    Route::prefix('financeiro')->name("financeiro.")->group(function () {
+        Route::match(['get', 'post'], '/', [FinanceiroController::class, 'index'])->name("index");
+        Route::match(['get', 'post'], '/meus-pagamentos', [FinanceiroController::class, 'meusPagamentos'])->name("meus.pagamentos");
+    });
 });
