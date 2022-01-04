@@ -35,15 +35,15 @@ Route::get('/alterar-senha/{token}', [LoginController::class, 'alterarSenha'])->
 Route::post('/alterar-senha/{token}', [LoginController::class, 'confirmAlterarSenha'])->name("confirm-alterar-senha");
 
 Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")->group(function () {
-    Route::match(['get','post'], '/', [AdminController::class, 'home'])->name("home");
-    Route::get('/ajax-associados-ativos', [AdminController::class, 'ajaxAssociadosAtivos'])->name("ajax.associados.ativos");
-    Route::get('/ajax-associados-ativos-inativos', [AdminController::class, 'ajaxAssociadosAtivosInativos'])->name("ajax.associados.ativos.inativos");
-    Route::get('/ajax-planos', [AdminController::class, 'ajaxPlanos'])->name("ajax.planos");
-    Route::get('/ajax-categorias', [AdminController::class, 'ajaxCategorias'])->name("ajax.categorias");
+    Route::match(['get','post'], '/', [AdminController::class, 'home'])->name("home")->middleware(["isAdmin"]);
+    Route::get('/ajax-associados-ativos', [AdminController::class, 'ajaxAssociadosAtivos'])->name("ajax.associados.ativos")->middleware(["isAdmin"]);
+    Route::get('/ajax-associados-ativos-inativos', [AdminController::class, 'ajaxAssociadosAtivosInativos'])->name("ajax.associados.ativos.inativos")->middleware(["isAdmin"]);
+    Route::get('/ajax-planos', [AdminController::class, 'ajaxPlanos'])->name("ajax.planos")->middleware(["isAdmin"]);
+    Route::get('/ajax-categorias', [AdminController::class, 'ajaxCategorias'])->name("ajax.categorias")->middleware(["isAdmin"]);
 
     Route::get('/meus-dados', [AdminController::class, 'meusDados'])->name("meus-dados");
 
-    Route::prefix('cupom')->name("cupom.")->group(function () {
+    Route::prefix('cupom')->middleware(["isAdmin"])->name("cupom.")->group(function () {
         Route::match(['get', 'post'], '/', [CupomController::class, 'index'])->name("index");
         Route::match(['get', 'post'], '/save', [CupomController::class, 'save'])->name("save");
         Route::match(['get', 'post'], '/buscar', [CupomController::class, 'buscar'])->name("buscar");
@@ -51,25 +51,25 @@ Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")-
     });
 
     Route::prefix('associado')->name("associado.")->group(function () {
-        Route::match(['get', 'post'], '/buscar', [AssociadoController::class, 'adminBuscar'])->name("buscar");
-        Route::match(['get', 'post'], '/ajax-buscar', [AssociadoController::class, 'adminAjaxBuscar'])->name("ajax.buscar");
+        Route::match(['get', 'post'], '/buscar', [AssociadoController::class, 'adminBuscar'])->name("buscar")->middleware(["isAdmin"]);
+        Route::match(['get', 'post'], '/ajax-buscar', [AssociadoController::class, 'adminAjaxBuscar'])->name("ajax.buscar")->middleware(["isAdmin"]);
 
-        Route::match(['get', 'post'], '/aguardando-aprovacao', [AssociadoController::class, 'adminAguardandoAprovacao'])->name("aguardando.aprovacao");
-        Route::match(['get', 'post'], '/ajax-aguardando-aprovacao', [AssociadoController::class, 'adminAjaxAguardandoAprovacao'])->name("ajax.aguardando.aprovacao");
+        Route::match(['get', 'post'], '/aguardando-aprovacao', [AssociadoController::class, 'adminAguardandoAprovacao'])->name("aguardando.aprovacao")->middleware(["isAdmin"]);
+        Route::match(['get', 'post'], '/ajax-aguardando-aprovacao', [AssociadoController::class, 'adminAjaxAguardandoAprovacao'])->name("ajax.aguardando.aprovacao")->middleware(["isAdmin"]);
 
-        Route::match(['get', 'post'], '/dependentes', [AssociadoController::class, 'adminDependentes'])->name("dependentes");
-        Route::match(['get', 'post'], '/ajax-dependentes', [AssociadoController::class, 'adminAjaxDependentes'])->name("ajax.dependentes");
+        Route::match(['get', 'post'], '/dependentes', [AssociadoController::class, 'adminDependentes'])->name("dependentes")->middleware(["isAdmin"]);
+        Route::match(['get', 'post'], '/ajax-dependentes', [AssociadoController::class, 'adminAjaxDependentes'])->name("ajax.dependentes")->middleware(["isAdmin"]);
 
-        Route::get('/ajax-detalhes/{idassociado}', [AssociadoController::class, 'adminAjaxDetalhes'])->name("ajax.detalhes");
-        Route::get('/ajax-aprovar/{idassociado}', [AssociadoController::class, 'adminAjaxAprovar'])->name("ajax.aprovar");
-        Route::get('/ajax-excluir/{idassociado}', [AssociadoController::class, 'adminAjaxExcluir'])->name("ajax.excluir");
+        Route::get('/ajax-detalhes/{idassociado}', [AssociadoController::class, 'adminAjaxDetalhes'])->name("ajax.detalhes")->middleware(["isAdmin"]);
+        Route::get('/ajax-aprovar/{idassociado}', [AssociadoController::class, 'adminAjaxAprovar'])->name("ajax.aprovar")->middleware(["isAdmin"]);
+        Route::get('/ajax-excluir/{idassociado}', [AssociadoController::class, 'adminAjaxExcluir'])->name("ajax.excluir")->middleware(["isAdmin"]);
 
         Route::match(['get', 'post'], '/meus-dependentes', [AssociadoController::class, 'meusDependentes'])->name("meus.dependentes");
 
     });
 
     Route::prefix('financeiro')->name("financeiro.")->group(function () {
-        Route::match(['get', 'post'], '/', [FinanceiroController::class, 'index'])->name("index");
+        Route::match(['get', 'post'], '/', [FinanceiroController::class, 'index'])->name("index")->middleware(["isAdmin"]);
         Route::match(['get', 'post'], '/meus-pagamentos', [FinanceiroController::class, 'meusPagamentos'])->name("meus.pagamentos");
     });
 });
