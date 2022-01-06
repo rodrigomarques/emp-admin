@@ -45,6 +45,7 @@ class AdminController extends Controller
 
     public function meusDadosSave(Request $request){
         try{
+
             $user = Auth::user();
             $associadoService = new AssociadoService();
             $response = $associadoService->editarAssociado($user->id, $request);

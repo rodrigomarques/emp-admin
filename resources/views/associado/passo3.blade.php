@@ -66,9 +66,9 @@
                         <div class="input-group mb-3">
                             <select class="custom-select form-control" id="" name="parentesco">
                                 <option>Grau de Parentesco</option>
-                                <option @if(old('parentesco', '') == "CÔNJUGE") selected @endif>Cônjuge</option>
-                                <option @if(old('parentesco', '') == "FILHO") selected @endif>Filho(a)</option>
-                                <option @if(old('parentesco', '') == "PAI/MÃE") selected @endif>Pai/Mãe</option>
+                                <option value="CÔNJUGE" @if(old('parentesco', '') == "CÔNJUGE") selected @endif>Cônjuge</option>
+                                <option value="FILHO" @if(old('parentesco', '') == "FILHO") selected @endif>Filho(a)</option>
+                                <option value="PAI/MÃE" @if(old('parentesco', '') == "PAI/MÃE") selected @endif>Pai/Mãe</option>
                             </select>
                         </div>
                     </div>

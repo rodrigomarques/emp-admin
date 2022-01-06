@@ -23,6 +23,30 @@ const verDetalhes = (event) => {
 };
 
 
+const editarAssociado = (event) => {
+    let id = event.getAttribute("data-id");
+
+    if (urlEditar == undefined) {
+        alert("Não pode editar o associado");
+        return;
+    }
+
+    urlEditar = urlEditar.replace(":pidassociado", id);
+    location.href=urlEditar
+};
+
+const editarDependente = (event) => {
+    let id = event.getAttribute("data-id");
+
+    if (urlEditar == undefined) {
+        alert("Não pode editar o dependente");
+        return;
+    }
+
+    urlEditar = urlEditar.replace(":piddependente", id);
+    location.href = urlEditar;
+};
+
 const deletarAssociado = (event) => {
     let id = event.getAttribute("data-id");
 

@@ -348,7 +348,25 @@ class AssociadoService
         $response = new ResponseEntity();
         try {
 
-            if($request->input("senha") != $request->input("csenha")){
+            $file = $request->file("arquivo");
+            if ($file != null) {
+                $ext = strtolower($file->getClientOriginalExtension());
+                $size = $file->getSize();
+
+                if (!in_array($ext, File::VALID_EXT)) {
+                    $response->setStatus(400);
+                    $response->addError("Arquivo inválido");
+                    return $response;
+                }
+
+                if ($size > File::LIMIT_SIZE) {
+                    $response->setStatus(400);
+                    $response->addError("Tamanho do arquivo inválido");
+                    return $response;
+                }
+            }
+
+            if($request->input("senha") != "" && $request->input("senha") != $request->input("csenha")){
                 $response->setStatus(400);
                 $response->addError("As senhas devem ser iguais");
                 return $response;
@@ -372,8 +390,10 @@ class AssociadoService
             $associado->fill($request->all());
 
             $user->fill($request->all());
-            $senha = Hash::make($request->input("senha"));
-            $user->password = $senha;
+            if($request->input("senha") != ""){
+                $senha = Hash::make($request->input("senha"));
+                $user->password = $senha;
+            }
 
             $dbUser = Usuario::where("email", $user->email)->where("id", "!=", $idUser)->first();
             if($dbUser){
@@ -403,6 +423,16 @@ class AssociadoService
                 $response->setErrors($endereco->errors());
                 return $response;
             }
+
+            if($file != null){
+                $doc = $associado->documento;
+                $ext = $file->getClientOriginalExtension();
+                $filename = date('YmdHis') . uniqid() . "." . $ext;
+                $file->move('associados', $filename);
+                $associado->documento = 'associados/' . $filename;
+                @unlink($doc);
+            }
+
             $associado->save();
             $user->save();
 

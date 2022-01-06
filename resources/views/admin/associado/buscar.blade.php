@@ -68,6 +68,7 @@
 
         let url ='{{ route("admin.associado.ajax.detalhes", ["idassociado" => ":pidassociado"]) }}';
         let urlExcluir ='{{ route("admin.associado.ajax.excluir", ["idassociado" => ":pidassociado"]) }}';
+        let urlEditar ='{{ route("admin.associado.editar", ["idassociado" => ":pidassociado"]) }}';
 
 	</script>
     <script src="{{ asset('js/associado/index.js') }}?v={{ time() }}"></script>

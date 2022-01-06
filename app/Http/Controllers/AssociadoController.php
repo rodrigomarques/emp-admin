@@ -160,7 +160,7 @@ class AssociadoController extends Controller
                     $associado["telefone_cel"],
                     $associado["cpf"],
                     Format::fnDateView($associado["created_at"], true),
-                    Html::linkDataTable($associado["idassociado"], "fa fa-pencil", 'btn-edit'),
+                    Html::linkDataTable(base64_encode($associado["idassociado"]), "fa fa-pencil", 'btn-edit', '', 'editarAssociado'),
                     Html::linkDataTable($associado["idassociado"], "fa fa-trash", 'btn-del', '', 'deletarAssociado')
                 ];
                 return $dataLista;
@@ -218,7 +218,7 @@ class AssociadoController extends Controller
                     $associado["telefone_cel"],
                     $associado["cpf"],
                     Format::fnDateView($associado["created_at"], true),
-                    Html::linkDataTable($associado["idassociado"], "fa fa-pencil", 'btn-edit'),
+                    Html::linkDataTable(base64_encode($associado["idassociado"]), "fa fa-pencil", 'btn-edit', '', 'editarAssociado'),
                     Html::linkDataTable($associado["idassociado"], "fa fa-trash", 'btn-del', '', 'deletarAssociado')
                 ];
                 return $dataLista;
@@ -281,7 +281,7 @@ class AssociadoController extends Controller
                         $dependente["cpf"],
                         $dependente["parentesco"],
                         Format::fnDateView($dependente["created_at"], true),
-                        Html::linkDataTable($dependente["idassociado"], "fa fa-pencil", 'btn-edit'),
+                        Html::linkDataTable(base64_encode($dependente["id"]), "fa fa-pencil", 'btn-edit', '', 'editarDependente'),
                         Html::linkDataTable($dependente["idassociado"], "fa fa-trash", 'btn-del', '', '')
                     );
 
@@ -352,5 +352,49 @@ class AssociadoController extends Controller
         $data = [];
 
         return view("admin/associado/meus-dependentes", $data);
+    }
+
+    public function editar($id, Request $request){
+        $data = [];
+        $idAssoc = base64_decode($id);
+        $associadoService = new AssociadoService();
+
+        $data["listSubCategoria"] = SubCategoria::all();
+        $data["associado"] = $associadoService->getAssociadoById($idAssoc);
+        $data["idassociado"] = $id;
+
+        return view("admin/associado/editar", $data);
+    }
+
+    public function editarAssociadoSave($id, Request $request){
+        try{
+
+            $idAssoc = base64_decode($id);
+            $user = Usuario::join("associados", "associados.usuario_id", "=", "usuarios.id")
+                                ->where("associados.id", $idAssoc)
+                                ->first(["usuarios.id"]);
+            $associadoService = new AssociadoService();
+            $response = $associadoService->editarAssociado($user->id, $request);
+            if($response->getStatus() === 400)
+                return back()->withErrors($response->getErrors())
+                    ->withInput();
+
+            if($response->getStatus() === 200){
+                session()->flash('success', 'Dados salvos com sucesso!');
+            }
+        }catch(\Exception $e){
+            session()->flash('fail', 'Dados não podem ser alterados');
+        }
+        return back();
+    }
+
+    public function editarDependente($iddependente, Request $request){
+        $data = [];
+        $id = base64_decode($iddependente);
+        $service = new DependenteService;
+        $data["dependente"] = $service->getId($id);
+        $data["iddependente"] = $iddependente;
+
+        return view("admin/associado/editar-dependente", $data);
     }
 }

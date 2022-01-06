@@ -30,4 +30,9 @@ class DependenteService
         $dep = Dependente::where("associado_id", $idAssociado);
         return $dep->get();
     }
+
+    public function getId($id){
+        $dep = Dependente::find($id);
+        return $dep;
+    }
 }
