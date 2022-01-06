@@ -4,18 +4,18 @@
     <div class="box">
 
     <div class="box-body wizard-content">
-    <form action="cadAluno.php" method="post" class="tab-wizard wizard-circle">
+    <form action="{{ route('admin.meus-dados.save') }}" method="post" class="tab-wizard wizard-circle">
         <section>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Nome</label>
-                        <input type="text" name="nomeSocial" class="form-control" value="{{ $associado->nome }}" id="" required> </div>
+                        <input type="text" name="nome" class="form-control" value="{{ $associado->nome }}" id="" required> </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">E-mail</label>
-                        <input type="text" name="nome" class="form-control" value="{{ $associado->email }}" id="" required> </div>
+                        <input type="text" name="email" class="form-control" value="{{ $associado->email }}" id="" required> </div>
                 </div>
             </div>
             <div class="row">
@@ -43,7 +43,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Categoria</label>
-                        <select class="form-control" name="cor">
+                        <select class="form-control" name="subcategoria_id">
                         <option value="">Selecione a categoria principal</option>
                         @if(count($listSubCategoria) > 0)
                             @foreach($listSubCategoria as $sub)
@@ -58,13 +58,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Telefone</label>
-                        <input type="text" name="email" class="form-control" value="{{ $associado->telefone_res }}" id="" required>
+                        <input type="text" name="telefone_res" class="form-control" value="{{ $associado->telefone_res }}" id="" required>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="">Celular</label>
-                        <input type="text" name="email" class="form-control" value="{{ $associado->telefone_cel }}" id="" required>
+                        <input type="text" name="telefone_cel" class="form-control" value="{{ $associado->telefone_cel }}" id="" required>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -147,7 +147,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Repita a Senha</label>
-                        <input type="password" name="senha" class="form-control" value="" id="">
+                        <input type="password" name="csenha" class="form-control" value="" id="">
                     </div>
                 </div>
             </div>

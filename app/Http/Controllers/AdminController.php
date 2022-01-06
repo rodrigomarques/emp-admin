@@ -43,6 +43,24 @@ class AdminController extends Controller
         return view("admin/meus-dados", $data);
     }
 
+    public function meusDadosSave(Request $request){
+        try{
+            $user = Auth::user();
+            $associadoService = new AssociadoService();
+            $response = $associadoService->editarAssociado($user->id, $request);
+            if($response->getStatus() === 400)
+                return back()->withErrors($response->getErrors())
+                    ->withInput();
+
+            if($response->getStatus() === 200){
+                session()->flash('success', 'Dados salvos com sucesso!');
+            }
+        }catch(\Exception $e){
+            session()->flash('fail', 'Dados não podem ser alterados');
+        }
+        return back();
+    }
+
     public function ajaxPlanos(Request $request){
         $associadoService = new AssociadoService();
         $lista = $associadoService->getCountPlanos([ ]);

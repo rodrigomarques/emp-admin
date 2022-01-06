@@ -342,4 +342,85 @@ class AssociadoService
 
         return $response;
     }
+
+    public function editarAssociado($idUser, Request $request): ResponseEntity
+    {
+        $response = new ResponseEntity();
+        try {
+
+            if($request->input("senha") != $request->input("csenha")){
+                $response->setStatus(400);
+                $response->addError("As senhas devem ser iguais");
+                return $response;
+            }
+
+            \DB::beginTransaction();
+            $associado = Associado::where("usuario_id", $idUser)->first();
+            if(!$associado){
+                $response->setStatus(400);
+                $response->addError("Asociado não encontrado");
+                return $response;
+            }
+
+            $user = Usuario::find($idUser);
+            if(!$user){
+                $response->setStatus(400);
+                $response->addError("Usuário não encontrado");
+                return $response;
+            }
+
+            $associado->fill($request->all());
+
+            $user->fill($request->all());
+            $senha = Hash::make($request->input("senha"));
+            $user->password = $request->input("senha");
+
+            $dbUser = Usuario::where("email", $user->email)->where("id", "!=", $idUser)->first();
+            if($dbUser){
+                $response->setStatus(400);
+                $response->addError("E-mail já cadastrado");
+                return $response;
+            }
+
+            if (!$user->validate()) {
+                $response->setStatus(400);
+                $response->setErrors($user->errors());
+                return $response;
+            }
+
+            if(!$associado->validate()){
+                $response->setStatus(400);
+                $response->setErrors($associado->errors());
+                return $response;
+            }
+
+            $endereco = Endereco::where("associado_id", $associado->id)->first();
+            if(!$endereco) $endereco = new Endereco();
+
+            $endereco->fill($request->all());
+            if (!$endereco->validate()) {
+                $response->setStatus(400);
+                $response->setErrors($endereco->errors());
+                return $response;
+            }
+            $associado->save();
+            $user->save();
+
+            $endereco->associado_id = $associado->id;
+            $endereco->save();
+            \DB::commit();
+            $response->setEntity([
+                'user' => $user,
+                'associado' => $associado
+            ]);
+            $response->setStatus(200);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            $response->setStatus(500);
+            \Log::error("Erro ao salvar associado", [ $e->getMessage()]);
+            throw new \Exception("Não pode salvar o associado");
+        }
+
+        return $response;
+    }
 }

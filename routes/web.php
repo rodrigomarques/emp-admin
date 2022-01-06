@@ -42,6 +42,7 @@ Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")-
     Route::get('/ajax-categorias', [AdminController::class, 'ajaxCategorias'])->name("ajax.categorias")->middleware(["isAdmin"]);
 
     Route::get('/meus-dados', [AdminController::class, 'meusDados'])->name("meus-dados");
+    Route::post('/meus-dados', [AdminController::class, 'meusDadosSave'])->name("meus-dados.save");
 
     Route::prefix('cupom')->middleware(["isAdmin"])->name("cupom.")->group(function () {
         Route::match(['get', 'post'], '/', [CupomController::class, 'index'])->name("index");
