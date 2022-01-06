@@ -373,7 +373,7 @@ class AssociadoService
 
             $user->fill($request->all());
             $senha = Hash::make($request->input("senha"));
-            $user->password = $request->input("senha");
+            $user->password = $senha;
 
             $dbUser = Usuario::where("email", $user->email)->where("id", "!=", $idUser)->first();
             if($dbUser){

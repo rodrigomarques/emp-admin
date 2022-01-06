@@ -247,6 +247,8 @@ class AssociadoController extends Controller
 
         $begin = $request->input("start", 0);
         $end = $request->input("length", 10);
+        $isAssociado = $request->input("isAssociado", 0);
+
         $orderField = "";
         $orderDirection = "ASC";
 
@@ -263,19 +265,26 @@ class AssociadoController extends Controller
 
         $data = [];
         if(count($dataLista["data"]) > 0){
-            $associadoGrid = array_map(function($dependente){
-                $dataLista = [
-                    Html::status($dependente["statusassoc"]),
-                    Html::linkDataTable($dependente["idassociado"], '', ' btn-ver ', $dependente["nomeusu"], 'verDetalhes'),
-                    $dependente["nome"],
-                    $dependente["email"],
-                    Format::fnDateView($dependente["dt_nascimento"]),
-                    $dependente["cpf"],
-                    $dependente["parentesco"],
-                    Format::fnDateView($dependente["created_at"], true),
-                    Html::linkDataTable($dependente["idassociado"], "fa fa-pencil", 'btn-edit'),
-                    Html::linkDataTable($dependente["idassociado"], "fa fa-trash", 'btn-del', '', '')
-                ];
+            $associadoGrid = array_map(function($dependente) use($isAssociado){
+
+                $dataLista = [];
+
+                if($isAssociado != 1) {
+                    array_push($dataLista,  Html::status($dependente["statusassoc"]));
+                    array_push($dataLista,  Html::linkDataTable($dependente["idassociado"], '', ' btn-ver ', $dependente["nomeusu"], 'verDetalhes'));
+                }
+
+                array_push($dataLista,
+                        $dependente["nome"],
+                        $dependente["email"],
+                        Format::fnDateView($dependente["dt_nascimento"]),
+                        $dependente["cpf"],
+                        $dependente["parentesco"],
+                        Format::fnDateView($dependente["created_at"], true),
+                        Html::linkDataTable($dependente["idassociado"], "fa fa-pencil", 'btn-edit'),
+                        Html::linkDataTable($dependente["idassociado"], "fa fa-trash", 'btn-del', '', '')
+                    );
+
                 return $dataLista;
             }, $dataLista["data"]->toArray());
             $data = $associadoGrid;

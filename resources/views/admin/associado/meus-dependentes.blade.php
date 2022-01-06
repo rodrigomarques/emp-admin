@@ -6,7 +6,7 @@
     <!-- /.box-header -->
     <div class="box-body"><br>
         <div class="table-responsive">
-            <table id="example5" class="table table-bordered table-hover table-striped display nowrap margin-top-10 w-p100">
+            <table id="tabela-cupom" class="datatable table table-bordered table-hover table-striped display nowrap margin-top-10 w-p100">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -14,21 +14,12 @@
                     <th>Data de Nascimento</th>
                     <th>CPF</th>
                     <th>Parentesco</th>
+                    <th>Data Cadastro</th>
                     <th>Editar</th>
                     <th>Excluir</th>
                 </tr>
             </thead>
             <tbody>
-
-            <tr>
-                <td>Nome do Dependente</td>
-                <td>email@email.com.br</td>
-                <td>99/99/9999</td>
-                <td>999.999.999-99</td>
-                <td>Cônjuge</td>
-                <td><a href="#"><i class='fa fa-pencil'></a></td>
-                <td><a href="#"><i class='fa fa-trash'></a></td>
-            </tr>
 
             </tbody>
         </table>
@@ -46,4 +37,40 @@
 @endsection
 @section("scriptjs")
     <script src="{{ asset('assets/vendor_components/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/datatable.config.js') }}"></script>
+    <script>
+		$(function () {
+        "use strict";
+
+        dataTableOptions.processing = true
+        dataTableOptions.serverSide = true;
+        dataTableOptions.searchable = false;
+        dataTableOptions.columns = [
+            {"orderable": false},
+            {"orderable": false},
+            {"orderable": false},
+            {"orderable": false},
+            {"orderable": false},
+            {"orderable": false},
+            {"orderable": false},
+            {"orderable": false},
+        ]
+
+        dataTableOptions.ajax = $.fn.dataTable.pipeline( {
+            url: "{{ route('admin.associado.ajax.dependentes') }}",
+            type : 'POST',
+            pages: 1,
+            data: function ( d ) {
+                d.extra_search = $('#extra').val();
+                d.isAssociado = 1;
+            },
+        })
+
+        var table = $(".datatable").DataTable(dataTableOptions); // End of use strict
+        })
+
+        let url ='{{ route("admin.associado.ajax.detalhes", ["idassociado" => ":pidassociado"]) }}';
+
+	</script>
+    <script src="{{ asset('js/associado/index.js') }}?v={{ time() }}"></script>
 @endsection
