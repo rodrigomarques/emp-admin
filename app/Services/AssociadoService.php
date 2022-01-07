@@ -47,6 +47,13 @@ class AssociadoService
                 return $response;
             }
 
+            $dbAssoc = Associado::where("cpf", $associado->cpf)->first();
+            if($dbAssoc){
+                $response->setStatus(400);
+                $response->addError("Cpf já cadastrado");
+                return $response;
+            }
+
             if(!$associado->validate()){
                 $response->setStatus(400);
                 $response->setErrors($associado->errors());

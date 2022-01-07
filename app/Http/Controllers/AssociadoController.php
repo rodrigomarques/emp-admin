@@ -13,6 +13,7 @@ use App\Models\Status;
 use App\Dto\ParamDataTable;
 use App\Services\AssociadoService;
 use App\Services\DependenteService;
+use App\Models\Perfil;
 class AssociadoController extends Controller
 {
     public function passo1(){
@@ -392,17 +393,37 @@ class AssociadoController extends Controller
         $data = [];
         $id = base64_decode($iddependente);
         $service = new DependenteService;
-        $data["dependente"] = $service->getId($id);
+        $dependente = $service->getId($id);
+        $data["dependente"] = $dependente;
         $data["iddependente"] = $iddependente;
+
+        $user = \Auth::user();
+        $idAssociado = 0;
+
+        if($user->perfil == Perfil::ASSOCIADO){
+            $associado = Associado::where("usuario_id", $user->id)->first();
+            if($dependente->associado_id != $associado->id){
+                session()->flash('fail', 'Dependente não pode ser alterado por este usuário');
+                return back();
+            }
+        }
 
         return view("admin/associado/editar-dependente", $data);
     }
 
     public function editarDependenteSave($iddependente, Request $request){
         try{
+            $user = \Auth::user();
+            $idAssociado = 0;
+
+            if($user->perfil == Perfil::ASSOCIADO){
+                $associado = Associado::where("usuario_id", $user->id)->first();
+                $idAssociado = $associado->id;
+            }
+
             $idDep = base64_decode($iddependente);
             $service = new DependenteService;
-            $response = $service->editarDependente($idDep, $request);
+            $response = $service->editarDependente($idDep, $request, $idAssociado);
             if($response->getStatus() === 400)
                 return back()->withErrors($response->getErrors())
                     ->withInput();
@@ -418,9 +439,17 @@ class AssociadoController extends Controller
 
     public function excluirDependente($iddependente, Request $request){
         try{
+            $user = \Auth::user();
+            $idAssociado = 0;
+
+            if($user->perfil == Perfil::ASSOCIADO){
+                $associado = Associado::where("usuario_id", $user->id)->first();
+                $idAssociado = $associado->id;
+            }
+
             $idDep = base64_decode($iddependente);
             $service = new DependenteService;
-            $response = $service->excluirDependente($idDep);
+            $response = $service->excluirDependente($idDep, $idAssociado);
             if($response->getStatus() === 400)
                 return back()->withErrors($response->getErrors())
                     ->withInput();

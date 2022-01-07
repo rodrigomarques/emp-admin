@@ -36,7 +36,7 @@ class DependenteService
         return $dep;
     }
 
-    public function editarDependente($idDependente, Request $request): ResponseEntity
+    public function editarDependente($idDependente, Request $request, $idAssociado = 0): ResponseEntity
     {
         $response = new ResponseEntity();
         try {
@@ -64,6 +64,12 @@ class DependenteService
             if(!$dependente){
                 $response->setStatus(400);
                 $response->addError("Dependente não encontrado");
+                return $response;
+            }
+
+            if($idAssociado != 0 && $idAssociado != $dependente->associado_id){
+                $response->setStatus(400);
+                $response->addError("Dependente não pode ser alterado por este usuário");
                 return $response;
             }
 
@@ -99,7 +105,7 @@ class DependenteService
         return $response;
     }
 
-    public function excluirDependente($idDependente): ResponseEntity
+    public function excluirDependente($idDependente, $idAssociado = 0): ResponseEntity
     {
         $response = new ResponseEntity();
         try {
@@ -109,6 +115,12 @@ class DependenteService
             if(!$dependente){
                 $response->setStatus(400);
                 $response->addError("Dependente não encontrado");
+                return $response;
+            }
+
+            if($idAssociado != 0 && $idAssociado != $dependente->associado_id){
+                $response->setStatus(400);
+                $response->addError("Dependente não pode ser excluído por este usuário");
                 return $response;
             }
 
