@@ -397,4 +397,22 @@ class AssociadoController extends Controller
 
         return view("admin/associado/editar-dependente", $data);
     }
+
+    public function editarDependenteSave($iddependente, Request $request){
+        try{
+            $idDep = base64_decode($iddependente);
+            $service = new DependenteService;
+            $response = $service->editarDependente($idDep, $request);
+            if($response->getStatus() === 400)
+                return back()->withErrors($response->getErrors())
+                    ->withInput();
+
+            if($response->getStatus() === 200){
+                session()->flash('success', 'Dados salvos com sucesso!');
+            }
+        }catch(\Exception $e){
+            session()->flash('fail', 'Dados não podem ser alterados');
+        }
+        return back();
+    }
 }
