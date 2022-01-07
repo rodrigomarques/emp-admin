@@ -98,4 +98,36 @@ class DependenteService
 
         return $response;
     }
+
+    public function excluirDependente($idDependente): ResponseEntity
+    {
+        $response = new ResponseEntity();
+        try {
+
+            \DB::beginTransaction();
+            $dependente = Dependente::find($idDependente);
+            if(!$dependente){
+                $response->setStatus(400);
+                $response->addError("Dependente não encontrado");
+                return $response;
+            }
+
+            $doc = $dependente->documento;
+            @unlink($doc);
+
+            $dependente->delete();
+            \DB::commit();
+            $response->setEntity([
+                'dependente' => null,
+            ]);
+            $response->setStatus(200);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            $response->setStatus(500);
+            \Log::error("Erro ao excluir o dependente", [ $e->getMessage()]);
+            throw new \Exception("Não pode excluir o dependente");
+        }
+
+        return $response;
+    }
 }

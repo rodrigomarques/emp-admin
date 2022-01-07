@@ -70,6 +70,7 @@
 
         let url ='{{ route("admin.associado.ajax.detalhes", ["idassociado" => ":pidassociado"]) }}';
         let urlEditar ='{{ route("admin.associado.dependentes.editar", ["iddependente" => ":piddependente"]) }}';
+        let urlExcluir ='{{ route("admin.associado.dependentes.excluir", ["iddependente" => ":piddependente"]) }}';
 
 	</script>
     <script src="{{ asset('js/associado/index.js') }}?v={{ time() }}"></script>

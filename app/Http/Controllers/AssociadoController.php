@@ -282,7 +282,7 @@ class AssociadoController extends Controller
                         $dependente["parentesco"],
                         Format::fnDateView($dependente["created_at"], true),
                         Html::linkDataTable(base64_encode($dependente["id"]), "fa fa-pencil", 'btn-edit', '', 'editarDependente'),
-                        Html::linkDataTable($dependente["idassociado"], "fa fa-trash", 'btn-del', '', '')
+                        Html::linkDataTable(base64_encode($dependente["id"]), "fa fa-trash", 'btn-del', '', 'deletarDependente')
                     );
 
                 return $dataLista;
@@ -412,6 +412,24 @@ class AssociadoController extends Controller
             }
         }catch(\Exception $e){
             session()->flash('fail', 'Dados não podem ser alterados');
+        }
+        return back();
+    }
+
+    public function excluirDependente($iddependente, Request $request){
+        try{
+            $idDep = base64_decode($iddependente);
+            $service = new DependenteService;
+            $response = $service->excluirDependente($idDep);
+            if($response->getStatus() === 400)
+                return back()->withErrors($response->getErrors())
+                    ->withInput();
+
+            if($response->getStatus() === 200){
+                session()->flash('success', 'Dados excluído com sucesso!');
+            }
+        }catch(\Exception $e){
+            session()->flash('fail', 'Dados não podem ser excluído');
         }
         return back();
     }

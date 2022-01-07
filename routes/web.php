@@ -62,6 +62,8 @@ Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")-
         Route::match(['get', 'post'], '/ajax-dependentes', [AssociadoController::class, 'adminAjaxDependentes'])->name("ajax.dependentes");
         Route::get('/dependentes/editar/{iddependente}', [AssociadoController::class, 'editarDependente'])->name("dependentes.editar")->middleware(["isAdmin"]);
         Route::post('/dependentes/editar/{iddependente}', [AssociadoController::class, 'editarDependenteSave'])->name("dependentes.editar.save")->middleware(["isAdmin"]);
+        Route::get('/dependentes/excluir/{iddependente}', [AssociadoController::class, 'excluirDependente'])->name("dependentes.excluir")->middleware(["isAdmin"]);
+
 
         Route::get('/ajax-detalhes/{idassociado}', [AssociadoController::class, 'adminAjaxDetalhes'])->name("ajax.detalhes");
         Route::get('/editar/{idassociado}', [AssociadoController::class, 'editar'])->name("editar")->middleware(["isAdmin"]);

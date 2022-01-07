@@ -47,6 +47,18 @@ const editarDependente = (event) => {
     location.href = urlEditar;
 };
 
+const deletarDependente = (event) => {
+    let id = event.getAttribute("data-id");
+
+    if (urlExcluir == undefined) {
+        alert("Não pode excluir o dependente");
+        return;
+    }
+
+    urlExcluir = urlExcluir.replace(":piddependente", id);
+    location.href = urlExcluir;
+};
+
 const deletarAssociado = (event) => {
     let id = event.getAttribute("data-id");
 
