@@ -124,6 +124,18 @@
 							<li><a href="{{ route('admin.cupom.buscar') }}">Cupons Gerados</a></li>
 						</ul>
 					</li>
+                    <li class="treeview menu-open">
+						<a href="#">
+							<i class="fa fa-gift"></i>
+							<span>Cadastros</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu" style="">
+							<li><a href="{{ route('admin.cadastro.planos') }}">Planos</a></li>
+						</ul>
+					</li>
 					<li>
 						<a href="{{ route('admin.financeiro.index') }}">
 						<i class="fa fa-dollar" aria-hidden="true"></i>

@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CupomController;
 use App\Http\Controllers\InitController;
 use App\Http\Controllers\FinanceiroController;
+use App\Http\Controllers\CadastroController;
 
 Route::get('/init', [InitController::class, 'load'])->name("init.load");
 
@@ -49,6 +50,11 @@ Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")-
         Route::match(['get', 'post'], '/save', [CupomController::class, 'save'])->name("save");
         Route::match(['get', 'post'], '/buscar', [CupomController::class, 'buscar'])->name("buscar");
         Route::match(['get', 'post'], '/ajax-buscar', [CupomController::class, 'ajaxBuscar'])->name("ajax.buscar");
+    });
+
+    Route::prefix('cadastro')->middleware(["isAdmin"])->name("cadastro.")->group(function () {
+        Route::match(['get', 'post'], '/planos', [CadastroController::class, 'planos'])->name("planos");
+        Route::match(['get', 'post'], '/ajax-planos', [CadastroController::class, 'ajaxBuscar'])->name("ajax.planos");
     });
 
     Route::prefix('associado')->name("associado.")->group(function () {

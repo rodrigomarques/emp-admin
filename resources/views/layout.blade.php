@@ -90,8 +90,9 @@
         $(document).ready(function(){
             $("#subcategoria").change(function() {
                var categoria = $("#subcategoria option:selected").text();
+               var tipo = $("#subcategoria option:selected").attr("data-tipo");
 
-               if(["ALUNO DE FORMAÇÃO", "ALUNO ESCOLA FORMAÇÃO"].includes(categoria)){
+               if(tipo == "NIP/RG"){
                 $("#nip").removeAttr("disabled");
                 $('#pagamentoNIP').show();
                 $('#pagamento').hide();
@@ -102,6 +103,15 @@
                }
 
             });
+
+            $(".pagamento").on('change', function(){
+                let pag = $(this).find('option:selected').val();
+                if(pag == "FOLHA"){
+                    $("#dvplano").hide()
+                }else{
+                    $("#dvplano").show()
+                }
+            })
         });
     </script>
 

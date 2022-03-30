@@ -97,7 +97,7 @@
                             <option value="">Selecione a categoria principal</option>
                             @if(count($listSubCategoria) > 0)
                                 @foreach($listSubCategoria as $sub)
-                                    <option @if(old('subcategoria_id', '') == $sub->id) selected @endif value="{{ $sub->id }}">{{ $sub->subcategoria }}</option>
+                                    <option @if(old('subcategoria_id', '') == $sub->id) selected @endif data-tipo="{{ $sub->tipo }}" value="{{ $sub->id }}">{{ $sub->subcategoria }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -123,7 +123,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control" id="pagamentoNIP" name="pagamentoNIP" style="display:none">
+                        <select class="custom-select form-control pagamento" id="pagamentoNIP" name="pagamentoNIP" style="display:none">
                             <option value="">Forma de Pagamento</option>
                             <option @if(old('pagamentoNIP', '') == "FOLHA") selected @endif value="FOLHA">Desconto em Folha</option>
                             <option @if(old('pagamentoNIP', '') == "DEPOSITO") selected @endif value="DEPOSITO">Depósito Bancário</option>
@@ -131,7 +131,7 @@
                             <option @if(old('pagamentoNIP', '') == "CREDITO") selected @endif value="CREDITO">Cartão de Crédito</option>
                             <option @if(old('pagamentoNIP', '') == "PIX") selected @endif value="PIX">PIX</option>
                         </select>
-                        <select class="custom-select form-control" id="pagamento" name="pagamento" style="display:block">
+                        <select class="custom-select form-control pagamento" id="pagamento" name="pagamento" style="display:block">
                             <option value="">Forma de Pagamento</option>
                             <option @if(old('pagamento', '') == "DEPOSITO") selected @endif value="DEPOSITO">Depósito Bancário</option>
                             <option @if(old('pagamento', '') == "BOLETO") selected @endif value="BOLETO">Boleto Bancário</option>
@@ -141,15 +141,34 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" id="dvplano">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control" id="" name="plano">
+                        <select class="custom-select form-control" id="plano" name="plano">
                             <option>Selecione o Plano</option>
                             <option @if(old('plano', '') == "12") selected @endif value="12">12 meses</option>
                             <option @if(old('plano', '') == "24") selected @endif value="24">24 meses</option>
                             <option @if(old('plano', '') == "36") selected @endif value="36">36 meses</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label >Associado do abrigo do marinheiro (AMN)?</label>
+                    <div class="input-group mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="amn" id="amn_sim" value="S" @if(old('amn') == "S") checked @endif>
+                            <label class="form-check-label" for="amn_sim">
+                                Sim
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="amn" id="amn_nao" value="N" @if(old('amn') == "N") checked @endif>
+                            <label class="form-check-label" for="amn_nao">
+                                Não
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,9 +181,6 @@
                         <label>Selecione os documentos (RG, CPF ou CNH)</label>
                         <input type="file" name="arquivo" placeholder="Selecione o Arquivo">
                     </div>
-
-
-
                 </div>
             </div>
         </div>
