@@ -83,14 +83,15 @@
 
 	<!-- Vendor JS -->
 	<script src="{{ asset('js/vendors.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('assets/icons/feather-icons/feather.min.js') }}"></script>
 
     <script>
         $(document).ready(function(){
-            $("#categoria").change(function() {
-               var categoria = $(this).val();
+            $("#subcategoria").change(function() {
+               var categoria = $("#subcategoria option:selected").text();
 
-               if(categoria=='1'){
+               if(["ALUNO DE FORMAÇÃO", "ALUNO ESCOLA FORMAÇÃO"].includes(categoria)){
                 $("#nip").removeAttr("disabled");
                 $('#pagamentoNIP').show();
                 $('#pagamento').hide();
@@ -106,6 +107,7 @@
 
     <script>
           $(document).ready(function(){
+
           $('.date').mask('00/00/0000');
           $('.time').mask('00:00:00');
           $('.date_time').mask('00/00/0000 00:00:00');
@@ -116,6 +118,8 @@
           $('.mixed').mask('AAA 000-S0S');
           $('.cpf').mask('000.000.000-00', {reverse: true});
           $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
+          $('.nip').mask('00.0000.00', {reverse: true});
+
           $('.money').mask('000.000.000.000.000,00', {reverse: true});
           $('.money2').mask("#.##0,00", {reverse: true});
           $('.ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {

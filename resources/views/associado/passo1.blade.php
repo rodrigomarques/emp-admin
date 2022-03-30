@@ -6,7 +6,7 @@
 <div class="p-40 pt-10">
     <form action="{{ route('associado.passo1-save') }}" method="post" enctype="multipart/form-data">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -16,13 +16,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text  bg-transparent"><i class="ti-email"></i></span>
                         </div>
                         <input type="text" name="email" class="form-control pl-15 bg-transparent" placeholder="E-mail" value="{{ old('email', '') }}"  >
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text  bg-transparent"><i class="ti-email"></i></span>
+                        </div>
+                        <input type="text" name="confirmar_email" class="form-control pl-15 bg-transparent" placeholder="Confirmar E-mail" value=""  >
                     </div>
                 </div>
             </div>
@@ -56,7 +66,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" name="cpf" class="form-control pl-15 bg-transparent" placeholder="CPF" value="{{ old('cpf', '') }}"  >
+                        <input type="text" name="cpf" class="form-control pl-15 bg-transparent cpf" placeholder="CPF" value="{{ old('cpf', '') }}"  >
                     </div>
                 </div>
             </div>
@@ -104,7 +114,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="text" name="nip" class="form-control pl-15 bg-transparent" placeholder="NIP"  id="nip" disabled value="{{ old('nip', '') }}"  >
+                        <input type="text" name="nip" class="form-control pl-15 bg-transparent nip" placeholder="NIP"  id="nip" disabled value="{{ old('nip', '') }}"  >
                     </div>
                 </div>
             </div>
@@ -119,12 +129,14 @@
                             <option @if(old('pagamentoNIP', '') == "DEPOSITO") selected @endif value="DEPOSITO">Depósito Bancário</option>
                             <option @if(old('pagamentoNIP', '') == "BOLETO") selected @endif value="BOLETO">Boleto Bancário</option>
                             <option @if(old('pagamentoNIP', '') == "CREDITO") selected @endif value="CREDITO">Cartão de Crédito</option>
+                            <option @if(old('pagamentoNIP', '') == "PIX") selected @endif value="PIX">PIX</option>
                         </select>
                         <select class="custom-select form-control" id="pagamento" name="pagamento" style="display:block">
                             <option value="">Forma de Pagamento</option>
                             <option @if(old('pagamento', '') == "DEPOSITO") selected @endif value="DEPOSITO">Depósito Bancário</option>
                             <option @if(old('pagamento', '') == "BOLETO") selected @endif value="BOLETO">Boleto Bancário</option>
                             <option @if(old('pagamento', '') == "CREDITO") selected @endif value="CREDITO">Cartão de Crédito</option>
+                            <option @if(old('pagamento', '') == "PIX") selected @endif value="PIX">PIX</option>
                         </select>
                     </div>
                 </div>

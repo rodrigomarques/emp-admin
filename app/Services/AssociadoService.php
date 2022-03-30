@@ -25,6 +25,24 @@ class AssociadoService
         $response = new ResponseEntity();
         try {
 
+            $confirmar_email = $request->input("confirmar_email", "");
+            $email = $request->input("email", "");
+
+            if($email != $confirmar_email){
+                $response->setStatus(400);
+                $response->addError("E-mails devem ser iguais");
+                return $response;
+            }
+
+            $senha = $request->input("senha");
+            $csenha = $request->input("csenha");
+
+            if($senha != $csenha){
+                $response->setStatus(400);
+                $response->addError("As senhas devem ser iguais");
+                return $response;
+            }
+
             $associado = new Associado($request->all());
             $usuario = new Usuario($request->all());
             $usuario->password = $request->input("senha");

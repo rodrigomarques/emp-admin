@@ -24,12 +24,14 @@ class Associado extends RModel
         'cpf' => 'required',
         'forma_pagamento' => 'required',
         'plano' => 'required',
+        'telefone_cel' => 'required'
     ];
 
     protected $messages = [
         'cpf.required' => 'CPF é obrigatório',
         'forma_pagamento.required' => 'Forma de pagamento é obrigatório',
         'plano.required' => 'Plano é obrigatório',
+        'telefone_cel.required' => 'Celular é obrigatório',
     ];
 
     public function usuario(){
