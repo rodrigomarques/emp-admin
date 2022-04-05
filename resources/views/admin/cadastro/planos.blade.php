@@ -8,10 +8,16 @@
         <input type="hidden" name="idplano" value="{{ $plano->id }}">
         <section>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="">Plano</label>
                         <input type="text" name="plano" class="form-control" value="{{ $plano->plano }}" id="" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Meses</label>
+                        <input type="text" name="meses" class="form-control" value="{{ $plano->meses }}" id="" required>
                     </div>
                 </div>
             </div>

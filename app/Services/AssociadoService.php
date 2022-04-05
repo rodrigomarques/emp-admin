@@ -79,7 +79,21 @@ class AssociadoService
             }
 
             $file = $request->file("arquivo");
-            if($file != null){
+            $fileVerso = $request->file("arquivo_verso");
+            $fileAmn = $request->file("arquivo_amn");
+            if($file == null && $fileVerso == null){
+                $response->setStatus(400);
+                $response->addError("Arquivo é obrigatório");
+                return $response;
+            }
+
+            if($associado->amn == "S" && $fileAmn == null){
+                $response->setStatus(400);
+                $response->addError("Arquivo AMN é obrigatório");
+                return $response;
+            }
+
+            if($file != null && $fileVerso != null){
                 $ext = strtolower($file->getClientOriginalExtension());
                 $size = $file->getSize();
 
@@ -95,10 +109,52 @@ class AssociadoService
                     return $response;
                 }
 
+                $extVerso = strtolower($fileVerso->getClientOriginalExtension());
+                $sizeVerso = $fileVerso->getSize();
+
+                if (!in_array($extVerso, File::VALID_EXT)) {
+                    $response->setStatus(400);
+                    $response->addError("Arquivo inválido");
+                    return $response;
+                }
+
+                if ($sizeVerso > File::LIMIT_SIZE) {
+                    $response->setStatus(400);
+                    $response->addError("Tamanho do arquivo Verso inválido");
+                    return $response;
+                }
+
+                if($fileAmn != null){
+                    $extAmn = strtolower($fileAmn->getClientOriginalExtension());
+                    $sizeAmn = $fileAmn->getSize();
+
+                    if (!in_array($extAmn, File::VALID_EXT)) {
+                        $response->setStatus(400);
+                        $response->addError("Arquivo inválido");
+                        return $response;
+                    }
+
+                    if ($sizeAmn > File::LIMIT_SIZE) {
+                        $response->setStatus(400);
+                        $response->addError("Tamanho do arquivo AMN inválido");
+                        return $response;
+                    }
+
+                    $extAmn = $fileAmn->getClientOriginalExtension();
+                    $filenameAmn = "amn_" . date('YmdHis') . uniqid() . "." . $extAmn;
+                    $fileAmn->move('associados', $filenameAmn);
+                    $associado->documento_amn = 'associados/' . $filenameAmn;
+                }
+
                 $ext = $file->getClientOriginalExtension();
                 $filename = date('YmdHis') . uniqid() . "." . $ext;
                 $file->move('associados', $filename);
                 $associado->documento = 'associados/' . $filename;
+
+                $extVerso = $fileVerso->getClientOriginalExtension();
+                $filenameVerso = "verso_" . date('YmdHis') . uniqid() . "." . $extVerso;
+                $fileVerso->move('associados', $filenameVerso);
+                $associado->documento_verso = 'associados/' . $filenameVerso;
             }
 
             \DB::beginTransaction();
@@ -235,6 +291,17 @@ class AssociadoService
             $usuario = Usuario::find($associado->usuario_id);
 
             \DB::beginTransaction();
+
+            $plano = Planos::find($associado->plano_id);
+            if($plano){
+                $meses = $plano->meses;
+                if($meses != null){
+                    $dtFimPlano = \Carbon\Carbon::now();
+                    $dtFimPlano = $dtFimPlano->addMonths($meses);
+                    $associado->dt_fim_plano = $dtFimPlano->format("Y-m-d");
+                }
+            }
+
             $associado->status = Status::AGUARDANDO_LIBERACAO;
             $associado->save();
 

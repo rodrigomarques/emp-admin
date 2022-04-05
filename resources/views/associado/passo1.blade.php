@@ -178,8 +178,26 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <label>Selecione os documentos (RG, CPF ou CNH)</label>
+                        <label>Identidade Militar para os militares e outro RG para os demais (frente) </label>
                         <input type="file" name="arquivo" placeholder="Selecione o Arquivo">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <label>Identidade Militar para os militares e outro RG para os demais (verso) </label>
+                        <input type="file" name="arquivo_verso" placeholder="Selecione o Arquivo">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Carteira AMN</label>
+                    <div class="input-group mb-3">
+                        <input type="file" name="arquivo_amn" placeholder="Selecione o Arquivo">
                     </div>
                 </div>
             </div>

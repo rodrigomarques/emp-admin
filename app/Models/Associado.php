@@ -8,7 +8,7 @@ class Associado extends RModel
     public $timestamps = true;
     public $incrementing = true;
     protected $fillable = ['telefone_res', 'telefone_cel', 'sexo', 'cpf', 'subcategoria_id', 'rg', 'nip', 'forma_pagamento',
-        'plano_id', 'documento', 'usuario_id', 'status', 'dt_fim_plano', 'amn'];
+        'plano_id', 'documento', 'documento_verso', 'usuario_id', 'status', 'dt_fim_plano', 'amn', 'documento_amn'];
 
     public static $dataTableViewColumns = [
         'status',
