@@ -144,11 +144,11 @@
             <div class="col-md-3" id="dvplano">
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control" id="plano" name="plano">
+                        <select class="custom-select form-control" id="plano_id" name="plano_id">
                             <option>Selecione o Plano</option>
-                            <option @if(old('plano', '') == "12") selected @endif value="12">12 meses</option>
-                            <option @if(old('plano', '') == "24") selected @endif value="24">24 meses</option>
-                            <option @if(old('plano', '') == "36") selected @endif value="36">36 meses</option>
+                            @foreach($listPlanos as $plano)
+                                <option @if(old('plano_id', "") == $plano->id) selected @endif value="{{ $plano->id }}">{{ $plano->plano }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

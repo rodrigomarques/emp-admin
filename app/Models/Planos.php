@@ -22,4 +22,14 @@ class Planos extends RModel
         'plano.required' => 'Plano é obrigatório',
         'valor.required' => 'Valor é obrigatório',
     ];
+
+    public function setValorAttribute($value) {
+        $value = str_replace(",",".",$value);
+        $this->attributes["valor"] = preg_replace("/[^0-9.]/", "", $value);
+    }
+
+    public function setJoiaAttribute($value) {
+        $value = str_replace(",",".",$value);
+        $this->attributes["joia"] = preg_replace("/[^0-9.]/", "", $value);
+    }
 }

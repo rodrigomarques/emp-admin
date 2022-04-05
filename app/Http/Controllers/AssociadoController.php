@@ -7,6 +7,7 @@ use App\Models\SubCategoria;
 use App\Models\Usuario;
 use App\Models\Endereco;
 use App\Models\Associado;
+use App\Models\Planos;
 use App\Util\Html;
 use App\Util\Format;
 use App\Models\Status;
@@ -19,6 +20,7 @@ class AssociadoController extends Controller
     public function passo1(){
         $data = [];
         $data["listSubCategoria"] = SubCategoria::all();
+        $data["listPlanos"] = Planos::where("status", Status::ATIVO)->get();
         return view("associado/passo1", $data);
     }
 

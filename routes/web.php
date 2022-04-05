@@ -54,7 +54,11 @@ Route::middleware(['auth', 'validate.access'])->prefix('admin')->name("admin.")-
 
     Route::prefix('cadastro')->middleware(["isAdmin"])->name("cadastro.")->group(function () {
         Route::match(['get', 'post'], '/planos', [CadastroController::class, 'planos'])->name("planos");
+        Route::match(['post'], '/planos/save', [CadastroController::class, 'savePlanos'])->name("save.planos");
         Route::match(['get', 'post'], '/ajax-planos', [CadastroController::class, 'ajaxBuscar'])->name("ajax.planos");
+
+        Route::get('/planos/editar/{idplano}', [CadastroController::class, 'editarPlano'])->name("editar.planos")->middleware(["isAdmin"]);
+        Route::get('/planos/excluir/{idplano}', [CadastroController::class, 'excluirPlano'])->name("excluir.planos")->middleware(["isAdmin"]);
     });
 
     Route::prefix('associado')->name("associado.")->group(function () {

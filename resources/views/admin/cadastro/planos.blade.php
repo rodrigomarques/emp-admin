@@ -4,13 +4,14 @@
     <div class="box">
 
     <div class="box-body wizard-content">
-    <form action="{{ route('admin.cupom.save') }}" method="post" class="tab-wizard wizard-circle">
+    <form action="{{ route('admin.cadastro.save.planos') }}" method="post" class="tab-wizard wizard-circle">
+        <input type="hidden" name="idplano" value="{{ $plano->id }}">
         <section>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="">Plano</label>
-                        <input type="text" name="plano" class="form-control" value="" id="" required>
+                        <input type="text" name="plano" class="form-control" value="{{ $plano->plano }}" id="" required>
                     </div>
                 </div>
             </div>
@@ -19,14 +20,14 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="">Valor do Plano (Mensalidade)</label>
-                        <input type="text" name="valor" class="form-control" value="" id="" required>
+                        <input type="text" name="valor" class="form-control money2" value="{{ \App\Util\Format::fn($plano->valor, 2, false) }}" id="" required>
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="">Valor da Joia</label>
-                        <input type="text" name="joia" class="form-control" value="" id="" required>
+                        <input type="text" name="joia" class="form-control money2" value="{{ \App\Util\Format::fn($plano->joia, 2, false) }}" id="" required>
                     </div>
                 </div>
             </div>
@@ -88,7 +89,8 @@
         var table = $(".datatable").DataTable(dataTableOptions); // End of use strict
         })
 
-
+        let urlExcluir ='{{ route("admin.cadastro.excluir.planos", ["idplano" => ":pidplano"]) }}';
+        let urlEditar ='{{ route("admin.cadastro.editar.planos", ["idplano" => ":pidplano"]) }}';
 
 	</script>
     <script src="{{ asset('js/cadastro/planos.js') }}?v={{ time() }}"></script>
